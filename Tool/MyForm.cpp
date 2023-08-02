@@ -29,7 +29,6 @@ BEGIN_MESSAGE_MAP(CMyForm, CFormView)
 	ON_BN_CLICKED(IDC_BUTTON1, &CMyForm::OnUnitTool)
 	ON_BN_CLICKED(IDC_BUTTON4, &CMyForm::OnMapTool)
 	ON_BN_CLICKED(IDC_BUTTON5, &CMyForm::OnPathFInd)
-	ON_BN_CLICKED(IDC_BUTTON6, &CMyForm::OnMySheet)
 	ON_BN_CLICKED(IDC_BUTTON2, &CMyForm::OnLUAScript)
 END_MESSAGE_MAP()
 
@@ -64,7 +63,6 @@ void CMyForm::OnInitialUpdate()
 	GetDlgItem(IDC_BUTTON1)->SetFont(&m_Font);
 	GetDlgItem(IDC_BUTTON4)->SetFont(&m_Font);
 	GetDlgItem(IDC_BUTTON5)->SetFont(&m_Font);
-	GetDlgItem(IDC_BUTTON6)->SetFont(&m_Font);
 	GetDlgItem(IDC_BUTTON2)->SetFont(&m_Font);
 
 }
@@ -101,16 +99,6 @@ void CMyForm::OnPathFInd()
 		m_PathFind.Create(IDD_CPathFind);
 
 	m_PathFind.ShowWindow(SW_SHOW);
-}
-
-
-void CMyForm::OnMySheet()
-{
-	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
-	if (nullptr == m_MySheet.GetSafeHwnd())
-		m_MySheet.Create(IDD_CMySheet);
-
-	m_MySheet.ShowWindow(SW_SHOW);
 }
 
 

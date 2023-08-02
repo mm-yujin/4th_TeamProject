@@ -46,12 +46,10 @@ public:
 	CMapTool	m_MapTool;
 
 	CPathFind	m_PathFind;
-	CMySheet	m_MySheet;
 	CLUA_Script	m_LUAScript;
 
 	afx_msg void OnMapTool();
 	afx_msg void OnPathFInd();
-	afx_msg void OnMySheet();
 	afx_msg void OnLUAScript();
 
 };
