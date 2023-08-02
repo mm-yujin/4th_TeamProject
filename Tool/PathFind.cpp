@@ -28,7 +28,31 @@ void CPathFind::DoDataExchange(CDataExchange* pDX)
 
 
 BEGIN_MESSAGE_MAP(CPathFind, CDialog)
+	ON_WM_DROPFILES()
+	ON_BN_CLICKED(IDC_BUTTON1, &CPathFind::OnSaveData)
+	ON_BN_CLICKED(IDC_BUTTON2, &CPathFind::OnLoadData)
 END_MESSAGE_MAP()
 
 
 // CPathFind 메시지 처리기
+
+
+
+void CPathFind::OnDropFiles(HDROP hDropInfo)
+{
+	// TODO: 여기에 메시지 처리기 코드를 추가 및/또는 기본값을 호출합니다.
+
+	CDialog::OnDropFiles(hDropInfo);
+}
+
+
+void CPathFind::OnSaveData()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+}
+
+
+void CPathFind::OnLoadData()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+}
