@@ -39,15 +39,16 @@ typedef	struct tagUnitData
 {
 #ifdef _AFX
 	CString	strName;
+	CString	strTeamName;
 #else
 	wstring	strName;
+	wstring	strTeamName;
 #endif
 
 	int		iAttack;
 	int		iHp;
 	BYTE	byJobIndex;
 	BYTE	byItem;
-	BYTE	byTeam;
 
 }UNITDATA;
 

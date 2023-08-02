@@ -2,7 +2,7 @@
 
 #include "afxwin.h"
 #include "Include.h"
-#include "TeamAgent.h"
+#include "UnitTool_TAB2.h"
 
 // UnitTool_TAB1 대화 상자
 
@@ -25,10 +25,15 @@ protected:
 	DECLARE_MESSAGE_MAP()
 
 public:
+	void Set_MainList(list<CString>* m_MainList) { m_MainListPtr = m_MainList; }
+
 	afx_msg void OnListBox();
 	afx_msg void OnCreateUnit();
 	afx_msg void OnSearchData();
 
+	void Set_ComboBox();
+
+	list<CString>* m_MainListPtr;
 
 	CString m_strTemp;
 	CString m_strSrc;
@@ -43,7 +48,6 @@ public:
 	CButton m_Bitmap;
 	CString m_strFindName;
 
-	CTeamAgent	m_TeamAgent;
 
 	map<CString, UNITDATA*>		m_mapUnitData;
 
@@ -51,4 +55,6 @@ public:
 	afx_msg void OnSaveData();
 	afx_msg void OnLoadData();
 
+	CComboBox m_Team_Com;
+	CString m_TeamName;
 };

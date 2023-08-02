@@ -19,6 +19,7 @@ UnitTool_TAB1::UnitTool_TAB1(CWnd* pParent /*=nullptr*/)
 	, m_iHp(0)
 	, m_iAttack(0)
 	, m_strFindName(_T(""))
+	, m_TeamName(_T(""))
 {
 
 }
@@ -46,6 +47,8 @@ void UnitTool_TAB1::DoDataExchange(CDataExchange* pDX)
 
 	DDX_Text(pDX, IDC_EDIT6, m_strFindName);
 
+	DDX_Control(pDX, IDC_COMBO1, m_Team_Com);
+	DDX_CBString(pDX, IDC_COMBO1, m_TeamName);
 }
 
 
@@ -71,14 +74,11 @@ void UnitTool_TAB1::OnListBox()
 
 	CString		strFindName;
 
-	//GetCurSel : 리스트 박스에서 선택한 목록의 인덱스를 반환
-
 	int		iIndex = m_ListBox.GetCurSel();
 
 	if (LB_ERR == iIndex)
 		return;
 
-	// GetText : 해당 인덱스의 문자열을 얻어오는 함수
 	m_ListBox.GetText(iIndex, strFindName);
 
 	auto		iter = m_mapUnitData.find(strFindName);
@@ -89,6 +89,7 @@ void UnitTool_TAB1::OnListBox()
 	m_strName = iter->second->strName;
 	m_iHp = iter->second->iHp;
 	m_iAttack = iter->second->iAttack;
+	m_TeamName = iter->second->strTeamName;
 
 	for (int i = 0; i < 3; ++i)
 	{
@@ -124,6 +125,7 @@ void UnitTool_TAB1::OnCreateUnit()
 	pUnit->strName = m_strName;
 	pUnit->iHp = m_iHp;
 	pUnit->iAttack = m_iAttack;
+	pUnit->strTeamName = m_TeamName;
 
 	for (int i = 0; i < 3; ++i)
 	{
@@ -153,6 +155,7 @@ void UnitTool_TAB1::OnCreateUnit()
 	m_mapUnitData.insert({ pUnit->strName, pUnit });
 
 	m_strName = L"";
+	m_TeamName = L"";
 	m_iHp = 0;
 	m_iAttack = 0;
 	for (int i = 0; i < 3; ++i)
@@ -186,6 +189,7 @@ void UnitTool_TAB1::OnSearchData()
 	m_strName = iter->second->strName;
 	m_iHp = iter->second->iHp;
 	m_iAttack = iter->second->iAttack;
+	m_TeamName = iter->second->strTeamName;
 
 	for (int i = 0; i < 3; ++i)
 	{
@@ -206,6 +210,19 @@ void UnitTool_TAB1::OnSearchData()
 
 
 	UpdateData(FALSE);
+}
+
+void UnitTool_TAB1::Set_ComboBox()
+{
+	m_Team_Com.ResetContent();
+
+	if (!m_MainListPtr->empty())
+	{
+		for (auto& iter : *m_MainListPtr) {
+			m_Team_Com.AddString(iter);
+		}
+	}
+
 }
 
 
@@ -242,27 +259,13 @@ void UnitTool_TAB1::OnSaveData()
 {
 	// CFileDialog : 파일 열기 혹은 저장작업 필요한 대화상자를 생성하는 객체
 
-	CFileDialog	Dlg(FALSE, // TRUE(열기), FALSE(다른 이름으로 저장) 모드 지정
-		L"dat", // default 확장자명
-		L"*.dat",  // 대화 상자에 표시할 최초 파일명
-		OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT, // OFN_HIDEREADONLY(읽기 전용 체크박스 숨김), OFN_OVERWRITEPROMPT(중복 저장 시 경고 메세지 띄움)
-		L"Data File(*.dat) | *.dat||", // "콤보 박스에 출력될 문자열 | 실제 사용할 필터링 문자열"
-		this);	// 부모 윈도우 주소
-
+	CFileDialog	Dlg(FALSE, L"dat", L"*.dat", OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT, 
+		L"Data File(*.dat) | *.dat||", this);	
 	TCHAR		szPath[MAX_PATH] = L"";
 
-	// GetCurrentDirectory: 현재 프로젝트가 있는 디렉토리 경로를 얻어옴(절대 경로)
 	GetCurrentDirectory(MAX_PATH, szPath);
-	//szPath = 0x00afeb90 L"D:\\유준환\\139기\\Frame139\\Tool"
-
-	// PathRemoveFileSpec : 전체 경로에서 파일 이름만 잘라내는 함수, 경로 상에 파일명이 없다면 제일 말단 폴더 이름을 잘라낸다.
 	PathRemoveFileSpec(szPath);
-	// szPath = 0x00afeb90 L"D:\\유준환\\139기\\Frame139"
-
-	/* /, //, \, \\, | (token, 구분자) : 경로에서 폴더명 단위로 잘라내어 쓰거나 읽고자 할 때 구분하기 위한 기호 */
-
 	lstrcat(szPath, L"\\Data");
-	// szPath = 0x00afeb90 L"D:\\유준환\\139기\\Frame139\\Data"
 
 	Dlg.m_ofn.lpstrInitialDir = szPath;
 
@@ -279,6 +282,7 @@ void UnitTool_TAB1::OnSaveData()
 
 		DWORD	dwByte = 0;
 		DWORD	dwStrByte = 0;
+		DWORD	dwTeamByte = 0;
 
 		for (auto& MyPair : m_mapUnitData)
 		{
@@ -294,7 +298,10 @@ void UnitTool_TAB1::OnSaveData()
 			WriteFile(hFile, &(MyPair.second->iHp), sizeof(int), &dwByte, nullptr);
 			WriteFile(hFile, &(MyPair.second->byJobIndex), sizeof(BYTE), &dwByte, nullptr);
 			WriteFile(hFile, &(MyPair.second->byItem), sizeof(BYTE), &dwByte, nullptr);
-			WriteFile(hFile, &(MyPair.second->byTeam), sizeof(BYTE), &dwByte, nullptr);
+
+			dwTeamByte = sizeof(TCHAR) * (MyPair.second->strTeamName.GetLength() + 1);
+			WriteFile(hFile, &dwTeamByte, sizeof(DWORD), &dwByte, nullptr);
+			WriteFile(hFile, MyPair.second->strTeamName.GetString(), dwTeamByte, &dwByte, nullptr);
 
 		}
 
@@ -344,6 +351,8 @@ void UnitTool_TAB1::OnLoadData()
 
 		DWORD	dwByte = 0;
 		DWORD	dwStrByte = 0;
+		DWORD	dwTeamByte = 0;
+
 		UNITDATA	tData{};
 
 
@@ -362,7 +371,11 @@ void UnitTool_TAB1::OnLoadData()
 			ReadFile(hFile, &(tData.iHp), sizeof(int), &dwByte, nullptr);
 			ReadFile(hFile, &(tData.byJobIndex), sizeof(BYTE), &dwByte, nullptr);
 			ReadFile(hFile, &(tData.byItem), sizeof(BYTE), &dwByte, nullptr);
-			ReadFile(hFile, &(tData.byTeam), sizeof(BYTE), &dwByte, nullptr);
+
+			ReadFile(hFile, &dwTeamByte, sizeof(DWORD), &dwByte, nullptr);
+			TCHAR* pTeamName = new TCHAR[dwStrByte];
+			ReadFile(hFile, pTeamName, dwTeamByte, &dwByte, nullptr);
+
 
 			if (0 == dwByte)
 			{
@@ -378,7 +391,9 @@ void UnitTool_TAB1::OnLoadData()
 			pUnit->iHp = tData.iHp;
 			pUnit->byJobIndex = tData.byJobIndex;
 			pUnit->byItem = tData.byItem;
-			pUnit->byTeam = tData.byTeam;
+
+			pUnit->strTeamName = pTeamName;
+			delete[]pTeamName;
 
 			m_mapUnitData.insert({ pUnit->strName, pUnit });
 

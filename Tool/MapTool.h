@@ -35,7 +35,7 @@ public:
 	CStatic m_Picture;
 
 	map<CString, CImage*>	m_mapPngImg;
-	int		m_iDrawID = 0;
+	int		m_iDrawID = 5;
 
 	afx_msg void OnSaveData();
 };

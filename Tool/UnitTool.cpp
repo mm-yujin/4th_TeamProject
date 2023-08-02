@@ -52,6 +52,9 @@ void CUnitTool::OnSelchangeTabMain(NMHDR* pNMHDR, LRESULT* pResult)
 	case 0:
 		dlg_Tab1->ShowWindow(SW_SHOW);
 		dlg_Tab2->ShowWindow(SW_HIDE);
+
+		dlg_Tab1->Set_ComboBox();
+
 		break;
 	case 1:
 		dlg_Tab1->ShowWindow(SW_HIDE);
@@ -79,16 +82,17 @@ BOOL CUnitTool::OnInitDialog()
 	CRect rect;
 	m_TAB.GetWindowRect(&rect);
 
-	dlg_Tab1 = new UnitTool_TAB1;
-	dlg_Tab1->Create(IDD_UNITTOOL_TAB1, &m_TAB);
-	dlg_Tab1->MoveWindow(0, 25, rect.Width(), rect.Height());
-	dlg_Tab1->ShowWindow(SW_SHOW);
-
 	dlg_Tab2 = new UnitTool_TAB2;
 	dlg_Tab2->Create(IDD_UNITTOOL_TAB2, &m_TAB);
 	dlg_Tab2->MoveWindow(0, 25, rect.Width(), rect.Height());
 	dlg_Tab2->ShowWindow(SW_HIDE);
 
+	dlg_Tab1 = new UnitTool_TAB1;
+	dlg_Tab1->Create(IDD_UNITTOOL_TAB1, &m_TAB);
+	dlg_Tab1->MoveWindow(0, 25, rect.Width(), rect.Height());
+	dlg_Tab1->ShowWindow(SW_SHOW);
+
+	dlg_Tab1->Set_MainList(&dlg_Tab2->Get_MainList());
 
 	return TRUE;  // return TRUE unless you set the focus to a control
 				  // 예외: OCX 속성 페이지는 FALSE를 반환해야 합니다.

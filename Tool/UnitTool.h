@@ -28,8 +28,6 @@ protected:
 	DECLARE_MESSAGE_MAP()
 public:
 
-
-
 	CTabCtrl m_TAB;
 	UnitTool_TAB1*	dlg_Tab1;
 	UnitTool_TAB2*	dlg_Tab2;

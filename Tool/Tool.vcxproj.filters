@@ -76,6 +76,12 @@
     <Filter Include="06. FormView\DIalog\05. Team Agent">
       <UniqueIdentifier>{d8a1bf9f-013a-4acf-9a7f-b5b1314f86ce}</UniqueIdentifier>
     </Filter>
+    <Filter Include="06. FormView\DIalog\00. UnitTool\TAB2">
+      <UniqueIdentifier>{a13d3458-4e02-4b99-909e-e8d2262530d4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="06. FormView\DIalog\00. UnitTool\TAB1">
+      <UniqueIdentifier>{fd538a7d-5879-406f-88d5-9bd09ad06ff4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -148,10 +154,10 @@
       <Filter>06. FormView\DIalog\05. Team Agent</Filter>
     </ClInclude>
     <ClInclude Include="UnitTool_TAB1.h">
-      <Filter>헤더 파일</Filter>
+      <Filter>06. FormView\DIalog\00. UnitTool\TAB1</Filter>
     </ClInclude>
     <ClInclude Include="UnitTool_TAB2.h">
-      <Filter>헤더 파일</Filter>
+      <Filter>06. FormView\DIalog\00. UnitTool\TAB2</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -216,10 +222,10 @@
       <Filter>06. FormView\DIalog\05. Team Agent</Filter>
     </ClCompile>
     <ClCompile Include="UnitTool_TAB1.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>06. FormView\DIalog\00. UnitTool\TAB1</Filter>
     </ClCompile>
     <ClCompile Include="UnitTool_TAB2.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>06. FormView\DIalog\00. UnitTool\TAB2</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
