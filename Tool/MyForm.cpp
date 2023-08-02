@@ -56,10 +56,14 @@ void CMyForm::OnInitialUpdate()
 	CFormView::OnInitialUpdate();
 
 	// CreatePointFont(ÆùÆ® Å©±â, ±Û¾¾Ã¼)
-	m_Font.CreatePointFont(180, L"±Ã¼­");
+	m_Font.CreatePointFont(120, L"¹ÙÅÁ");
 
 	GetDlgItem(IDC_BUTTON1)->SetFont(&m_Font);
 	GetDlgItem(IDC_BUTTON4)->SetFont(&m_Font);
+	GetDlgItem(IDC_BUTTON5)->SetFont(&m_Font);
+	GetDlgItem(IDC_BUTTON6)->SetFont(&m_Font);
+	GetDlgItem(IDC_BUTTON2)->SetFont(&m_Font);
+	GetDlgItem(IDC_BUTTON3)->SetFont(&m_Font);
 }
 
 

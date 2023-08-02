@@ -137,8 +137,8 @@ void CToolView::OnInitialUpdate()
 		AfxMessageBox(L"CDevice Initialize FAILED");
 
 
-	if (FAILED(CTextureMgr::Get_Instance()->Insert_Texture(L"../Texture/Cube.png", TEX_SINGLE, L"Cube")))
-		AfxMessageBox(L"CUBE IMG FAILED");
+	//if (FAILED(CTextureMgr::Get_Instance()->Insert_Texture(L"../Texture/Cube.png", TEX_SINGLE, L"Cube")))
+	//	AfxMessageBox(L"CUBE IMG FAILED");
 
 
 	m_pTerrain = new CTerrain;
