@@ -28,6 +28,10 @@ void CMyForm::DoDataExchange(CDataExchange* pDX)
 BEGIN_MESSAGE_MAP(CMyForm, CFormView)
 	ON_BN_CLICKED(IDC_BUTTON1, &CMyForm::OnUnitTool)
 	ON_BN_CLICKED(IDC_BUTTON4, &CMyForm::OnMapTool)
+	ON_BN_CLICKED(IDC_BUTTON5, &CMyForm::OnPathFInd)
+	ON_BN_CLICKED(IDC_BUTTON6, &CMyForm::OnMySheet)
+	ON_BN_CLICKED(IDC_BUTTON2, &CMyForm::OnLUAScript)
+	ON_BN_CLICKED(IDC_BUTTON3, &CMyForm::OnTeamAgent)
 END_MESSAGE_MAP()
 
 
@@ -56,10 +60,14 @@ void CMyForm::OnInitialUpdate()
 	CFormView::OnInitialUpdate();
 
 	// CreatePointFont(폰트 크기, 글씨체)
-	m_Font.CreatePointFont(180, L"궁서");
+	m_Font.CreatePointFont(120, L"바탕");
 
 	GetDlgItem(IDC_BUTTON1)->SetFont(&m_Font);
 	GetDlgItem(IDC_BUTTON4)->SetFont(&m_Font);
+	GetDlgItem(IDC_BUTTON5)->SetFont(&m_Font);
+	GetDlgItem(IDC_BUTTON6)->SetFont(&m_Font);
+	GetDlgItem(IDC_BUTTON2)->SetFont(&m_Font);
+	GetDlgItem(IDC_BUTTON3)->SetFont(&m_Font);
 }
 
 
@@ -84,4 +92,44 @@ void CMyForm::OnMapTool()
 		m_MapTool.Create(IDD_MAPTOOL);
 
 	m_MapTool.ShowWindow(SW_SHOW);
+}
+
+
+void CMyForm::OnPathFInd()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	if (nullptr == m_PathFind.GetSafeHwnd())
+		m_PathFind.Create(IDD_CPathFind);
+
+	m_PathFind.ShowWindow(SW_SHOW);
+}
+
+
+void CMyForm::OnMySheet()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	if (nullptr == m_MySheet.GetSafeHwnd())
+		m_MySheet.Create(IDD_CMySheet);
+
+	m_MySheet.ShowWindow(SW_SHOW);
+}
+
+
+void CMyForm::OnLUAScript()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	if (nullptr == m_LUAScript.GetSafeHwnd())
+		m_LUAScript.Create(IDD_CLUA_Script);
+
+	m_LUAScript.ShowWindow(SW_SHOW);
+}
+
+
+void CMyForm::OnTeamAgent()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	if (nullptr == m_TeamAgent.GetSafeHwnd())
+		m_TeamAgent.Create(IDD_CTeamAgent);
+
+	m_TeamAgent.ShowWindow(SW_SHOW);
 }

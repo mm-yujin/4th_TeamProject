@@ -3,6 +3,12 @@
 
 #include "UnitTool.h"
 #include "MapTool.h"
+
+#include "PathFind.h"
+#include "MySheet.h"
+#include "LUA_Script.h"
+#include "TeamAgent.h"
+
 // CMyForm Æû ºäÀÔ´Ï´Ù.
 
 class CMyForm : public CFormView
@@ -38,7 +44,17 @@ public:
 	CFont		m_Font;
 	CUnitTool	m_UnitTool;
 	CMapTool	m_MapTool;
+
+	CPathFind	m_PathFind;
+	CMySheet	m_MySheet;
+	CLUA_Script	m_LUAScript;
+	CTeamAgent	m_TeamAgent;
+
 	afx_msg void OnMapTool();
+	afx_msg void OnPathFInd();
+	afx_msg void OnMySheet();
+	afx_msg void OnLUAScript();
+	afx_msg void OnTeamAgent();
 };
 
 

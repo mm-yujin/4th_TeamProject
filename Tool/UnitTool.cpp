@@ -33,8 +33,6 @@ CUnitTool::~CUnitTool()
 void CUnitTool::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
-	DDX_Text(pDX, IDC_EDIT1, m_strTemp);
-	DDX_Text(pDX, IDC_EDIT2, m_strSrc);
 	DDX_Text(pDX, IDC_EDIT3, m_strName);
 	DDX_Text(pDX, IDC_EDIT4, m_iHp);
 	DDX_Text(pDX, IDC_EDIT5, m_iAttack);
@@ -46,14 +44,13 @@ void CUnitTool::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_CHECK2, m_Check[1]);
 	DDX_Control(pDX, IDC_CHECK3, m_Check[2]);
 
-	DDX_Control(pDX, IDC_BUTTON3, m_Bitmap);
 	DDX_Text(pDX, IDC_EDIT6, m_strFindName);
+	DDX_Control(pDX, IDC_RADIO4, m_Team[0]);
+	DDX_Control(pDX, IDC_RADIO5, m_Team[1]);
 }
 
 
 BEGIN_MESSAGE_MAP(CUnitTool, CDialog)
-
-	ON_BN_CLICKED(IDC_BUTTON1, &CUnitTool::OnBnClickedButton1)
 
 	ON_LBN_SELCHANGE(IDC_LIST1, &CUnitTool::OnListBox)
 	ON_BN_CLICKED(IDC_BUTTON2, &CUnitTool::OnCreateUnit)
@@ -66,18 +63,6 @@ END_MESSAGE_MAP()
 
 // CUnitTool 메시지 처리기입니다.
 
-
-void CUnitTool::OnBnClickedButton1()
-{
-	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
-
-	UpdateData(TRUE);	// 다이얼로그 박스로부터 입력된 값을 얻어옴
-
-	m_strSrc = m_strTemp;
-
-	UpdateData(FALSE);	// 변수에 저장된 값을을 다이얼로그 박스에 반영
-
-}
 
 
 void CUnitTool::OnListBox()
@@ -171,24 +156,6 @@ void CUnitTool::OnCreateUnit()
 	UpdateData(FALSE);
 }
 
-
-
-BOOL CUnitTool::OnInitDialog()
-{
-	CDialog::OnInitDialog();
-
-	HBITMAP		bBitmap = (HBITMAP)LoadImage(nullptr, 
-												L"../Texture/JusinLogo1.bmp",
-												IMAGE_BITMAP, 
-												100, 
-												50,
-												LR_LOADFROMFILE | LR_CREATEDIBSECTION);
-	m_Bitmap.SetBitmap(bBitmap);
-
-
-	return TRUE;  // return TRUE unless you set the focus to a control
-				  // 예외: OCX 속성 페이지는 FALSE를 반환해야 합니다.
-}
 
 
 void CUnitTool::OnSearchData()
