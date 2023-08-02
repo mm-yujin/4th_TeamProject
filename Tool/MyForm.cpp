@@ -98,38 +98,38 @@ void CMyForm::OnMapTool()
 void CMyForm::OnPathFInd()
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
-	if (nullptr == m_MapTool.GetSafeHwnd())
-		m_MapTool.Create(IDD_CPathFind);
+	if (nullptr == m_PathFind.GetSafeHwnd())
+		m_PathFind.Create(IDD_CPathFind);
 
-	m_MapTool.ShowWindow(SW_SHOW);
+	m_PathFind.ShowWindow(SW_SHOW);
 }
 
 
 void CMyForm::OnMySheet()
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
-	if (nullptr == m_MapTool.GetSafeHwnd())
-		m_MapTool.Create(IDD_CMySheet);
+	if (nullptr == m_MySheet.GetSafeHwnd())
+		m_MySheet.Create(IDD_CMySheet);
 
-	m_MapTool.ShowWindow(SW_SHOW);
+	m_MySheet.ShowWindow(SW_SHOW);
 }
 
 
 void CMyForm::OnLUAScript()
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
-	if (nullptr == m_MapTool.GetSafeHwnd())
-		m_MapTool.Create(IDD_CLUA_Script);
+	if (nullptr == m_LUAScript.GetSafeHwnd())
+		m_LUAScript.Create(IDD_CLUA_Script);
 
-	m_MapTool.ShowWindow(SW_SHOW);
+	m_LUAScript.ShowWindow(SW_SHOW);
 }
 
 
 void CMyForm::OnTeamAgent()
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
-	if (nullptr == m_MapTool.GetSafeHwnd())
-		m_MapTool.Create(IDD_CTeamAgent);
+	if (nullptr == m_TeamAgent.GetSafeHwnd())
+		m_TeamAgent.Create(IDD_CTeamAgent);
 
-	m_MapTool.ShowWindow(SW_SHOW);
+	m_TeamAgent.ShowWindow(SW_SHOW);
 }
