@@ -211,6 +211,8 @@
     <ClInclude Include="ToolDoc.h" />
     <ClInclude Include="ToolView.h" />
     <ClInclude Include="UnitTool.h" />
+    <ClInclude Include="UnitTool_TAB1.h" />
+    <ClInclude Include="UnitTool_TAB2.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Device.cpp" />
@@ -238,6 +240,8 @@
     <ClCompile Include="ToolDoc.cpp" />
     <ClCompile Include="ToolView.cpp" />
     <ClCompile Include="UnitTool.cpp" />
+    <ClCompile Include="UnitTool_TAB1.cpp" />
+    <ClCompile Include="UnitTool_TAB2.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Tool.rc" />

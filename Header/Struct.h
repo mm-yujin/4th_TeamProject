@@ -47,6 +47,7 @@ typedef	struct tagUnitData
 	int		iHp;
 	BYTE	byJobIndex;
 	BYTE	byItem;
+	BYTE	byTeam;
 
 }UNITDATA;
 

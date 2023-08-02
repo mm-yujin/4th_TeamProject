@@ -147,6 +147,12 @@
     <ClInclude Include="TeamAgent.h">
       <Filter>06. FormView\DIalog\05. Team Agent</Filter>
     </ClInclude>
+    <ClInclude Include="UnitTool_TAB1.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="UnitTool_TAB2.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Tool.cpp">
@@ -208,6 +214,12 @@
     </ClCompile>
     <ClCompile Include="TeamAgent.cpp">
       <Filter>06. FormView\DIalog\05. Team Agent</Filter>
+    </ClCompile>
+    <ClCompile Include="UnitTool_TAB1.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="UnitTool_TAB2.cpp">
+      <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

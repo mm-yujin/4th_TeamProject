@@ -31,7 +31,6 @@ BEGIN_MESSAGE_MAP(CMyForm, CFormView)
 	ON_BN_CLICKED(IDC_BUTTON5, &CMyForm::OnPathFInd)
 	ON_BN_CLICKED(IDC_BUTTON6, &CMyForm::OnMySheet)
 	ON_BN_CLICKED(IDC_BUTTON2, &CMyForm::OnLUAScript)
-	ON_BN_CLICKED(IDC_BUTTON3, &CMyForm::OnTeamAgent)
 END_MESSAGE_MAP()
 
 
@@ -67,7 +66,7 @@ void CMyForm::OnInitialUpdate()
 	GetDlgItem(IDC_BUTTON5)->SetFont(&m_Font);
 	GetDlgItem(IDC_BUTTON6)->SetFont(&m_Font);
 	GetDlgItem(IDC_BUTTON2)->SetFont(&m_Font);
-	GetDlgItem(IDC_BUTTON3)->SetFont(&m_Font);
+
 }
 
 
@@ -125,11 +124,4 @@ void CMyForm::OnLUAScript()
 }
 
 
-void CMyForm::OnTeamAgent()
-{
-	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
-	if (nullptr == m_TeamAgent.GetSafeHwnd())
-		m_TeamAgent.Create(IDD_CTeamAgent);
 
-	m_TeamAgent.ShowWindow(SW_SHOW);
-}

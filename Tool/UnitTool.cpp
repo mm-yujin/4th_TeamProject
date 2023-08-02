@@ -5,7 +5,7 @@
 #include "Tool.h"
 #include "UnitTool.h"
 #include "afxdialogex.h"
-
+#include "ToolView.h"
 
 // CUnitTool 대화 상자입니다.
 
@@ -30,6 +30,7 @@ CUnitTool::~CUnitTool()
 
 }
 
+
 void CUnitTool::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
@@ -47,6 +48,9 @@ void CUnitTool::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_EDIT6, m_strFindName);
 	DDX_Control(pDX, IDC_RADIO4, m_Team[0]);
 	DDX_Control(pDX, IDC_RADIO5, m_Team[1]);
+	DDX_Control(pDX, IDC_RADIO6, m_Team[2]);
+	DDX_Control(pDX, IDC_CHECK4, m_TeamNameCheck);
+	DDX_Control(pDX, IDC_TAB_Main, m_TAB);
 }
 
 
@@ -58,6 +62,9 @@ BEGIN_MESSAGE_MAP(CUnitTool, CDialog)
 	ON_BN_CLICKED(IDC_BUTTON5, &CUnitTool::OnDeleteData)
 	ON_BN_CLICKED(IDC_BUTTON6, &CUnitTool::OnSaveData)
 	ON_BN_CLICKED(IDC_BUTTON7, &CUnitTool::OnLoadData)
+	ON_BN_CLICKED(IDC_BUTTON1, &CUnitTool::OnBnClickedButton1_TeamAgent)
+	ON_BN_CLICKED(IDC_CHECK4, &CUnitTool::OnTeamNameSet)
+	ON_NOTIFY(TCN_SELCHANGE, IDC_TAB_Main, &CUnitTool::OnSelchangeTabMain)
 END_MESSAGE_MAP()
 
 
@@ -96,6 +103,7 @@ void CUnitTool::OnListBox()
 	{
 		m_Radio[i].SetCheck(FALSE);
 		m_Check[i].SetCheck(FALSE);
+		m_Team[i].SetCheck(FALSE);
 	}
 
 	m_Radio[iter->second->byJobIndex].SetCheck(TRUE);
@@ -109,6 +117,8 @@ void CUnitTool::OnListBox()
 	if (iter->second->byItem & SAPPHIRE)
 		m_Check[2].SetCheck(TRUE);
 	
+	m_Team[iter->second->byTeam].SetCheck(TRUE);
+
 	UpdateData(FALSE);
 
 }
@@ -135,6 +145,15 @@ void CUnitTool::OnCreateUnit()
 		}
 	}
 
+	for (int j = 0; j < 3; ++j)
+	{
+		if (m_Team[j].GetCheck())
+		{
+			pUnit->byTeam = j;
+			break;
+		}
+	}
+
 	pUnit->byItem = 0x00;
 
 	if (m_Check[0].GetCheck())
@@ -150,8 +169,18 @@ void CUnitTool::OnCreateUnit()
 
 	// AddString : 리스트 박스에 문자열을 추가
 	m_ListBox.AddString(pUnit->strName);
-
 	m_mapUnitData.insert({ pUnit->strName, pUnit });
+
+	m_strName = L"";
+	m_iHp = 0;
+	m_iAttack = 0;
+	for (int i = 0; i < 3; ++i)
+	{
+		m_Radio[i].SetCheck(FALSE);
+		m_Check[i].SetCheck(FALSE);
+		m_Team[i].SetCheck(FALSE);
+	}
+
 
 	UpdateData(FALSE);
 }
@@ -182,6 +211,7 @@ void CUnitTool::OnSearchData()
 	{
 		m_Radio[i].SetCheck(FALSE);
 		m_Check[i].SetCheck(FALSE);
+		m_Team[i].SetCheck(FALSE);
 	}
 
 	m_Radio[iter->second->byJobIndex].SetCheck(TRUE);
@@ -194,6 +224,8 @@ void CUnitTool::OnSearchData()
 
 	if (iter->second->byItem & SAPPHIRE)
 		m_Check[2].SetCheck(TRUE);
+
+	m_Team[iter->second->byTeam].SetCheck(TRUE);
 
 	UpdateData(FALSE);
 }
@@ -283,6 +315,7 @@ void CUnitTool::OnSaveData()
 			WriteFile(hFile, &(MyPair.second->iHp),			sizeof(int), &dwByte, nullptr);
 			WriteFile(hFile, &(MyPair.second->byJobIndex),	sizeof(BYTE), &dwByte, nullptr);
 			WriteFile(hFile, &(MyPair.second->byItem),		sizeof(BYTE), &dwByte, nullptr);
+			WriteFile(hFile, &(MyPair.second->byTeam),		sizeof(BYTE), &dwByte, nullptr);
 
 		}
 
@@ -302,12 +335,8 @@ void CUnitTool::OnLoadData()
 {
 	UpdateData(TRUE);
 
-	CFileDialog	Dlg(TRUE, // TRUE(열기), FALSE(다른 이름으로 저장) 모드 지정
-		L"dat", // default 확장자명
-		L"*.dat",  // 대화 상자에 표시할 최초 파일명
-		OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT, // OFN_HIDEREADONLY(읽기 전용 체크박스 숨김), OFN_OVERWRITEPROMPT(중복 저장 시 경고 메세지 띄움)
-		L"Data File(*.dat) | *.dat||", // "콤보 박스에 출력될 문자열 | 실제 사용할 필터링 문자열"
-		this);	// 부모 윈도우 주소
+	CFileDialog	Dlg(TRUE, L"dat", L"*.dat", OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT, // OFN_HIDEREADONLY(읽기 전용 체크박스 숨김), OFN_OVERWRITEPROMPT(중복 저장 시 경고 메세지 띄움)
+		L"Data File(*.dat) | *.dat||", this);
 
 	TCHAR		szPath[MAX_PATH] = L"";
 	GetCurrentDirectory(MAX_PATH, szPath);
@@ -324,8 +353,6 @@ void CUnitTool::OnLoadData()
 			delete MyPair.second;
 
 		m_mapUnitData.clear();
-
-		// 리스트 박스 목록을 초기화하는 함수
 		m_ListBox.ResetContent();
 		
 		CString	str = Dlg.GetPathName().GetString();
@@ -356,6 +383,7 @@ void CUnitTool::OnLoadData()
 			ReadFile(hFile, &(tData.iHp), sizeof(int), &dwByte, nullptr);
 			ReadFile(hFile, &(tData.byJobIndex), sizeof(BYTE), &dwByte, nullptr);
 			ReadFile(hFile, &(tData.byItem), sizeof(BYTE), &dwByte, nullptr);
+			ReadFile(hFile, &(tData.byTeam), sizeof(BYTE), &dwByte, nullptr);
 
 			if (0 == dwByte)
 			{
@@ -371,6 +399,7 @@ void CUnitTool::OnLoadData()
 			pUnit->iHp = tData.iHp;
 			pUnit->byJobIndex = tData.byJobIndex;
 			pUnit->byItem = tData.byItem;
+			pUnit->byTeam = tData.byTeam;
 
 			m_mapUnitData.insert({pUnit->strName, pUnit});
 
@@ -383,4 +412,61 @@ void CUnitTool::OnLoadData()
 	}
 
 	UpdateData(FALSE);
+}
+
+
+void CUnitTool::OnBnClickedButton1_TeamAgent()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	if (!m_TeamNameCheck.GetCheck())
+		AfxMessageBox(L"진영(팀) 이름의 확정 처리가 되지 않았습니다. \n 확정 처리 후 세팅이 가능합니다.");
+
+	else if (m_TeamNameCheck.GetCheck()) {
+		if (nullptr == m_TeamAgent.GetSafeHwnd())
+			m_TeamAgent.Create(IDD_CTeamAgent);
+
+		m_TeamAgent.ShowWindow(SW_SHOW);
+	}
+}
+
+
+void CUnitTool::OnTeamNameSet()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	if (m_TeamNameCheck.GetCheck())
+	{   
+		GetDlgItem(IDC_EDIT1)->EnableWindow(FALSE);
+		GetDlgItem(IDC_EDIT2)->EnableWindow(FALSE);
+		GetDlgItem(IDC_EDIT7)->EnableWindow(FALSE);
+	}
+	else if (!m_TeamNameCheck.GetCheck())
+	{
+		GetDlgItem(IDC_EDIT1)->EnableWindow(TRUE);
+		GetDlgItem(IDC_EDIT2)->EnableWindow(TRUE);
+		GetDlgItem(IDC_EDIT7)->EnableWindow(TRUE);
+	}
+}
+
+
+void CUnitTool::OnSelchangeTabMain(NMHDR* pNMHDR, LRESULT* pResult)
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	*pResult = 0;
+}
+
+
+BOOL CUnitTool::OnInitDialog()
+{
+	CDialog::OnInitDialog();
+
+	// TODO:  여기에 추가 초기화 작업을 추가합니다.
+
+	m_TAB.InsertItem(0, L"UNIT Data");
+	m_TAB.InsertItem(0, L"TEAM Data");
+
+	
+
+
+	return TRUE;  // return TRUE unless you set the focus to a control
+				  // 예외: OCX 속성 페이지는 FALSE를 반환해야 합니다.
 }
