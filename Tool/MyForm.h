@@ -39,6 +39,10 @@ public:
 	CUnitTool	m_UnitTool;
 	CMapTool	m_MapTool;
 	afx_msg void OnMapTool();
+	afx_msg void OnPathFInd();
+	afx_msg void OnMySheet();
+	afx_msg void OnLUAScript();
+	afx_msg void OnTeamAgent();
 };
 
 

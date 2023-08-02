@@ -64,6 +64,18 @@
     <Filter Include="05. Etc\01. FileInfo">
       <UniqueIdentifier>{09843c86-a5ea-4ab2-a8fc-62bc2ad663b6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="06. FormView\DIalog\02. PathFind">
+      <UniqueIdentifier>{2b40e201-3d70-4d89-a1d8-99fe21e59d64}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="06. FormView\DIalog\03. Sheet">
+      <UniqueIdentifier>{2fd7d213-313d-4c0e-b83a-9f539e145f9b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="06. FormView\DIalog\04. LUA">
+      <UniqueIdentifier>{d9c95320-23a0-4137-84ed-e8ef315e3082}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="06. FormView\DIalog\05. Team Agent">
+      <UniqueIdentifier>{d8a1bf9f-013a-4acf-9a7f-b5b1314f86ce}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -123,6 +135,18 @@
     <ClInclude Include="FileInfo.h">
       <Filter>05. Etc\01. FileInfo</Filter>
     </ClInclude>
+    <ClInclude Include="PathFind.h">
+      <Filter>06. FormView\DIalog\02. PathFind</Filter>
+    </ClInclude>
+    <ClInclude Include="MySheet.h">
+      <Filter>06. FormView\DIalog\03. Sheet</Filter>
+    </ClInclude>
+    <ClInclude Include="LUA_Script.h">
+      <Filter>06. FormView\DIalog\04. LUA</Filter>
+    </ClInclude>
+    <ClInclude Include="TeamAgent.h">
+      <Filter>06. FormView\DIalog\05. Team Agent</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Tool.cpp">
@@ -172,6 +196,18 @@
     </ClCompile>
     <ClCompile Include="FileInfo.cpp">
       <Filter>05. Etc\01. FileInfo</Filter>
+    </ClCompile>
+    <ClCompile Include="PathFind.cpp">
+      <Filter>06. FormView\DIalog\02. PathFind</Filter>
+    </ClCompile>
+    <ClCompile Include="MySheet.cpp">
+      <Filter>06. FormView\DIalog\03. Sheet</Filter>
+    </ClCompile>
+    <ClCompile Include="LUA_Script.cpp">
+      <Filter>06. FormView\DIalog\04. LUA</Filter>
+    </ClCompile>
+    <ClCompile Include="TeamAgent.cpp">
+      <Filter>06. FormView\DIalog\05. Team Agent</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

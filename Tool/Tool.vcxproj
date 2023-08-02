@@ -191,15 +191,19 @@
   <ItemGroup>
     <ClInclude Include="Device.h" />
     <ClInclude Include="FileInfo.h" />
+    <ClInclude Include="LUA_Script.h" />
     <ClInclude Include="MainFrm.h" />
     <ClInclude Include="MapTool.h" />
     <ClInclude Include="MiniView.h" />
     <ClInclude Include="MultiTexture.h" />
     <ClInclude Include="MyForm.h" />
+    <ClInclude Include="MySheet.h" />
+    <ClInclude Include="PathFind.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="SingleTexture.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="TeamAgent.h" />
     <ClInclude Include="Terrain.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="TextureMgr.h" />
@@ -211,11 +215,14 @@
   <ItemGroup>
     <ClCompile Include="Device.cpp" />
     <ClCompile Include="FileInfo.cpp" />
+    <ClCompile Include="LUA_Script.cpp" />
     <ClCompile Include="MainFrm.cpp" />
     <ClCompile Include="MapTool.cpp" />
     <ClCompile Include="MiniView.cpp" />
     <ClCompile Include="MultiTexture.cpp" />
     <ClCompile Include="MyForm.cpp" />
+    <ClCompile Include="MySheet.cpp" />
+    <ClCompile Include="PathFind.cpp" />
     <ClCompile Include="SingleTexture.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -223,6 +230,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="TeamAgent.cpp" />
     <ClCompile Include="Terrain.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="TextureMgr.cpp" />

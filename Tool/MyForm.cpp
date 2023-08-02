@@ -28,6 +28,10 @@ void CMyForm::DoDataExchange(CDataExchange* pDX)
 BEGIN_MESSAGE_MAP(CMyForm, CFormView)
 	ON_BN_CLICKED(IDC_BUTTON1, &CMyForm::OnUnitTool)
 	ON_BN_CLICKED(IDC_BUTTON4, &CMyForm::OnMapTool)
+	ON_BN_CLICKED(IDC_BUTTON5, &CMyForm::OnPathFInd)
+	ON_BN_CLICKED(IDC_BUTTON6, &CMyForm::OnMySheet)
+	ON_BN_CLICKED(IDC_BUTTON2, &CMyForm::OnLUAScript)
+	ON_BN_CLICKED(IDC_BUTTON3, &CMyForm::OnTeamAgent)
 END_MESSAGE_MAP()
 
 
@@ -86,6 +90,46 @@ void CMyForm::OnMapTool()
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 	if (nullptr == m_MapTool.GetSafeHwnd())
 		m_MapTool.Create(IDD_MAPTOOL);
+
+	m_MapTool.ShowWindow(SW_SHOW);
+}
+
+
+void CMyForm::OnPathFInd()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	if (nullptr == m_MapTool.GetSafeHwnd())
+		m_MapTool.Create(IDD_CPathFind);
+
+	m_MapTool.ShowWindow(SW_SHOW);
+}
+
+
+void CMyForm::OnMySheet()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	if (nullptr == m_MapTool.GetSafeHwnd())
+		m_MapTool.Create(IDD_CMySheet);
+
+	m_MapTool.ShowWindow(SW_SHOW);
+}
+
+
+void CMyForm::OnLUAScript()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	if (nullptr == m_MapTool.GetSafeHwnd())
+		m_MapTool.Create(IDD_CLUA_Script);
+
+	m_MapTool.ShowWindow(SW_SHOW);
+}
+
+
+void CMyForm::OnTeamAgent()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	if (nullptr == m_MapTool.GetSafeHwnd())
+		m_MapTool.Create(IDD_CTeamAgent);
 
 	m_MapTool.ShowWindow(SW_SHOW);
 }

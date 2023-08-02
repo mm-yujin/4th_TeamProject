@@ -9,6 +9,10 @@
 #define IDD_MYFORM                      310
 #define IDD_UNITTOOL                    311
 #define IDD_MAPTOOL                     312
+#define IDD_CPathFind                   313
+#define IDD_CMySheet                    314
+#define IDD_CLUA_Script                 315
+#define IDD_CTeamAgent                  316
 #define IDC_BUTTON1                     1000
 #define IDC_EDIT1                       1001
 #define IDC_BUTTON4                     1001
@@ -38,6 +42,6 @@
 #define _APS_NEXT_RESOURCE_VALUE        313
 #define _APS_NEXT_COMMAND_VALUE         32771
 #define _APS_NEXT_CONTROL_VALUE         1020
-#define _APS_NEXT_SYMED_VALUE           313
+#define _APS_NEXT_SYMED_VALUE           317
 #endif
 #endif
