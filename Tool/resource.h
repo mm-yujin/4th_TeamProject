@@ -16,11 +16,11 @@
 #define IDD_CLUA_Script                 315
 #define IDD_CTeamAgent                  316
 #define IDD_UNITTOOL_TAB1               317
-#define IDD_DIALOG1                     319
 #define IDC_BUTTON1                     1000
 #define IDC_EDIT1                       1001
 #define IDC_BUTTON4                     1001
 #define IDC_EDIT2                       1002
+#define IDC_BUTTON8                     1002
 #define IDC_EDIT3                       1003
 #define IDC_EDIT4                       1004
 #define IDC_EDIT5                       1005
@@ -55,6 +55,12 @@
 #define IDC_SLIDER6                     1029
 #define IDC_CHECK4                      1032
 #define IDC_TAB_Main                    1036
+#define IDC_LIST2                       1037
+#define IDC_COMBO1                      1038
+#define IDC_LIST4                       1040
+#define IDC_LIST3                       1043
+#define IDC_LIST5                       1044
+#define IDC_LIST6                       1045
 
 // Next default values for new objects
 // 
@@ -62,7 +68,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        322
 #define _APS_NEXT_COMMAND_VALUE         32771
-#define _APS_NEXT_CONTROL_VALUE         1037
+#define _APS_NEXT_CONTROL_VALUE         1039
 #define _APS_NEXT_SYMED_VALUE           317
 #endif
 #endif

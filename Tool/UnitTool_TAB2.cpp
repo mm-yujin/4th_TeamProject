@@ -1,7 +1,7 @@
 ﻿// UnitTool_TAB2.cpp: 구현 파일
 //
 
-#include "pch.h"
+#include "stdafx.h"
 #include "Tool.h"
 #include "UnitTool_TAB2.h"
 #include "afxdialogex.h"
