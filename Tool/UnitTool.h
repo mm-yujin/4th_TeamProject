@@ -22,10 +22,8 @@ protected:
 
 	DECLARE_MESSAGE_MAP()
 public:
-	afx_msg void OnBnClickedButton1();
 	afx_msg void OnListBox();
 	afx_msg void OnCreateUnit();	
-	virtual BOOL OnInitDialog();
 	afx_msg void OnSearchData();
 
 public:
@@ -40,6 +38,7 @@ public:
 	CListBox m_ListBox;
 	CButton m_Radio[3];
 	CButton m_Check[3];
+	CButton m_Team[2];
 	CButton m_Bitmap;
 	CString m_strFindName;
 
