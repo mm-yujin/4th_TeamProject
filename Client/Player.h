@@ -14,5 +14,10 @@ public:
 	virtual void Late_Update(void) override;
 	virtual void Render(void) override;
 	virtual void Release(void) override;
+
+private:
+	D3DXVECTOR3 m_vTargetPos;
+	bool		m_bMoveToTarget = false;
+	float		m_fSpeed;
 };
 

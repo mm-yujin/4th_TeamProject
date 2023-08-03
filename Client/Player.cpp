@@ -1,7 +1,8 @@
 #include "stdafx.h"
 #include "Player.h"
-#include "..\Tool\TextureMgr.h"
+#include "TextureMgr.h"
 #include "Device.h"
+#include "TimeMgr.h"
 
 CPlayer::CPlayer()
 {
@@ -25,6 +26,37 @@ HRESULT CPlayer::Initialize(void)
 
 int CPlayer::Update(void)
 {
+	if (0.f > ::Get_Mouse().x)
+		m_vScroll.x += 100.f * CTimeMgr::Get_Instance()->Get_TimeDelta();
+
+	if (WINCX < ::Get_Mouse().x)
+		m_vScroll.x -= 100.f * CTimeMgr::Get_Instance()->Get_TimeDelta();
+
+	if (0.f > ::Get_Mouse().y)
+		m_vScroll.y += 100.f * CTimeMgr::Get_Instance()->Get_TimeDelta();
+
+	if (WINCY < ::Get_Mouse().y)
+		m_vScroll.y -= 100.f * CTimeMgr::Get_Instance()->Get_TimeDelta();
+
+	
+	if (GetAsyncKeyState(VK_RBUTTON) & 0x8000)
+	{
+		m_vTargetPos = Get_Mouse() - m_vScroll;
+		m_bMoveToTarget = true;
+	}
+
+	if (m_bMoveToTarget)
+	{
+		Set_Dir((m_vTargetPos - m_tInfo.vPos));
+
+		m_tInfo.vPos += m_tInfo.vDir * m_fSpeed * CTimeMgr::Get_Instance()->Get_TimeDelta();
+
+		if (D3DXVec3Length(&(m_vTargetPos - m_tInfo.vPos)) < m_fSpeed * CTimeMgr::Get_Instance()->Get_TimeDelta())
+		{
+			m_bMoveToTarget = false;
+		}
+	}
+
 	D3DXMATRIX	matScale, matTrans;
 		
 	D3DXMatrixScaling(&matScale, 1.f, 1.f, 1.f);
