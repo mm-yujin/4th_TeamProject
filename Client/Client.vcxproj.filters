@@ -49,11 +49,11 @@
     <Filter Include="03. Scene\01. Stage">
       <UniqueIdentifier>{739641d6-dddd-4857-b1b9-5dc9936b9abb}</UniqueIdentifier>
     </Filter>
-    <Filter Include="01. Manager\Obj\01. Player">
-      <UniqueIdentifier>{029d7bf5-4664-478a-8b55-b5a6bac5299c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="01. Manager\Lua">
       <UniqueIdentifier>{a00effd1-1d39-4acc-83b2-d8cae7282f79}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Obj\01. Player">
+      <UniqueIdentifier>{029d7bf5-4664-478a-8b55-b5a6bac5299c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -112,10 +112,10 @@
       <Filter>03. Scene\01. Stage</Filter>
     </ClInclude>
     <ClInclude Include="Player.h">
-      <Filter>01. Manager\Obj\01. Player</Filter>
+      <Filter>02. Obj\01. Player</Filter>
     </ClInclude>
     <ClInclude Include="LuaMgr.h">
-      <Filter>헤더 파일</Filter>
+      <Filter>01. Manager\Lua</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -165,10 +165,10 @@
       <Filter>03. Scene\01. Stage</Filter>
     </ClCompile>
     <ClCompile Include="Player.cpp">
-      <Filter>01. Manager\Obj\01. Player</Filter>
+      <Filter>02. Obj\01. Player</Filter>
     </ClCompile>
     <ClCompile Include="LuaMgr.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>01. Manager\Lua</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

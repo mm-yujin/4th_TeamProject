@@ -29,7 +29,7 @@ HRESULT CPlayer::Initialize(void)
 
 int CPlayer::Update(void)
 {
-	if (0.f > ::Get_Mouse().x)
+	/*if (0.f > ::Get_Mouse().x)
 		m_vScroll.x += 100.f * CTimeMgr::Get_Instance()->Get_TimeDelta();
 
 	if (WINCX < ::Get_Mouse().x)
@@ -39,7 +39,7 @@ int CPlayer::Update(void)
 		m_vScroll.y += 100.f * CTimeMgr::Get_Instance()->Get_TimeDelta();
 
 	if (WINCY < ::Get_Mouse().y)
-		m_vScroll.y -= 100.f * CTimeMgr::Get_Instance()->Get_TimeDelta();
+		m_vScroll.y -= 100.f * CTimeMgr::Get_Instance()->Get_TimeDelta();*/
 
 	
 	if (GetAsyncKeyState(VK_RBUTTON) & 0x8000)
@@ -93,15 +93,30 @@ void CPlayer::Render(void)
 		&D3DXVECTOR3(fCenterX, fCenterY, 0.f), // 출력할 이미지의 중심 축에 대한 vector3 구조체 포인터, nullptr인 경우 0, 0이 중심 좌표
 		nullptr, // 위치 좌표에 따른 vector3 구조체 포인어
 		D3DCOLOR_ARGB(255, 255, 255, 255));
-	LoadLuaDamage();
+
+	TCHAR			szBuf[MIN_STR] = L"";
+
+	//double elapsedMicroseconds = measureFunctionPerformance(&CPlayer::LoadLuaDamage, this);
+
+	swprintf_s(szBuf, L"%d", LoadLuaDamage());
+
+	CDevice::Get_Instance()->Get_Font()->DrawTextW(CDevice::Get_Instance()->Get_Sprite(),
+		szBuf,
+		lstrlen(szBuf),
+		nullptr,
+		0,
+		D3DCOLOR_ARGB(255, 255, 255, 255));
 }
 
 void CPlayer::Release(void)
 {
 }
 
-void CPlayer::LoadLuaDamage()
+int CPlayer::LoadLuaDamage()
 {
-	//CLuaMgr::Get_Instance()->Test(1);
-	CLuaMgr::Get_Instance()->Call_Lua("Damage", 10, 10);
+	int t = 0;
+
+	CLuaMgr::Get_Instance()->Call_Lua("../Lua/Script/Damage.lua", "Damage", 10, 10);
+	CLuaMgr::Get_Instance()->Return_Lua(t);
+	return t;
 }

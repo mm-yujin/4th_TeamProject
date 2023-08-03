@@ -23,6 +23,6 @@ private:
 	float		m_fSpeed;
 
 public:
-	void LoadLuaDamage();
+	int LoadLuaDamage();
 };
 
