@@ -47,6 +47,8 @@ BEGIN_MESSAGE_MAP(UnitTool_TAB2, CDialogEx)
 	ON_BN_CLICKED(IDC_BUTTON1, &UnitTool_TAB2::OnAddTeamButton)
 	ON_LBN_SELCHANGE(IDC_LIST4, &UnitTool_TAB2::OnListBox_ViewHos_From)
 	ON_LBN_SELCHANGE(IDC_LIST5, &UnitTool_TAB2::OnListBox_SettingHos_From)
+	ON_LBN_SELCHANGE(IDC_LIST3, &UnitTool_TAB2::OnListBox_Setting_To_Once)
+	ON_LBN_SELCHANGE(IDC_LIST6, &UnitTool_TAB2::OnListBox_Setting_To_Multi)
 END_MESSAGE_MAP()
 
 
@@ -146,7 +148,160 @@ void UnitTool_TAB2::OnListBox_SettingHos_From()
 	}
 
 	UpdateData(FALSE);
+	
+}
+
+
+void UnitTool_TAB2::OnListBox_Setting_To_Once()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+
+	CString		strFromName;
+	CString		strFindName;
+	int			iFindIndex = 0;
+	int			iSelCount = 0;
+	int			iStayIndex = 0;
+	CString		strStayName;
+
+	UpdateData(TRUE);
+
+	iSelCount = m_ListBox_SettingHos_To_Multi.GetSelCount();
+	if (iSelCount > 1) {
+		//int*	pIndexs = new int[iSelCount];
+		CString* pNames = new CString[iSelCount];
+
+		int FullCount = m_ListBox_SettingHos_To_Multi.GetCount(), NowCount = 0;
+
+		for (int i = 0; i < FullCount; ++i)
+		{
+			if (m_ListBox_SettingHos_To_Multi.GetSel(i)) 
+			{
+				m_ListBox_SettingHos_To_Multi.GetText(i, pNames[NowCount]);
+				NowCount++;
+			}
+		}
+
+		m_ListBox_SettingHos_To_Multi.ResetContent();
+
+		for (auto& iter : m_TeamSetToList) {
+			m_ListBox_SettingHos_To_Multi.AddString(iter);
+		}
+
+		int		iIndex = m_ListBox_SettingHos_To_Once.GetCurSel();
+		m_ListBox_SettingHos_To_Once.GetText(iIndex, strFromName);
+
+
+		for (int i = 0; i < m_ListBox_SettingHos_To_Multi.GetCount(); ++i) {
+
+			m_ListBox_SettingHos_To_Multi.GetText(i, strFindName);
+
+			if (strFromName == strFindName) {
+				m_ListBox_SettingHos_To_Multi.DeleteString(i);
+			}
+		}
+
+		for (int i = 0; i < iSelCount; ++i)
+		{
+			iFindIndex = m_ListBox_SettingHos_To_Multi.FindStringExact(-1, pNames[i]);
+			m_ListBox_SettingHos_To_Multi.SetSel(iFindIndex);
+		}
+		pNames = nullptr;
+		delete[] pNames;
+	}
 
 
 
+	else if (iSelCount <= 1) {
+		iStayIndex = m_ListBox_SettingHos_To_Multi.GetCurSel();
+
+		if (-1 != iStayIndex) {
+			m_ListBox_SettingHos_To_Multi.GetText(iStayIndex, strStayName);
+		}
+
+		m_ListBox_SettingHos_To_Multi.ResetContent();
+
+		for (auto& iter : m_TeamSetToList) {
+			m_ListBox_SettingHos_To_Multi.AddString(iter);
+		}
+
+		int		iIndex = m_ListBox_SettingHos_To_Once.GetCurSel();
+		m_ListBox_SettingHos_To_Once.GetText(iIndex, strFromName);
+
+		if (-1 != iStayIndex) {
+
+			for (int i = 0; i < m_ListBox_SettingHos_To_Multi.GetCount(); ++i) {
+
+				m_ListBox_SettingHos_To_Multi.GetText(i, strFindName);
+
+				if (strFromName == strFindName) {
+					m_ListBox_SettingHos_To_Multi.DeleteString(i);
+
+					iFindIndex = m_ListBox_SettingHos_To_Multi.FindStringExact(-1, strStayName);
+					m_ListBox_SettingHos_To_Multi.SetCurSel(iFindIndex);
+				}
+			}
+		}
+		else if (-1 == iStayIndex) {
+
+			iFindIndex = m_ListBox_SettingHos_To_Multi.FindStringExact(-1, strFromName);
+			m_ListBox_SettingHos_To_Multi.DeleteString(iFindIndex);
+
+		}
+
+	}
+	
+	UpdateData(FALSE);
+
+}
+
+
+void UnitTool_TAB2::OnListBox_Setting_To_Multi()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	CString		strFromName;
+	CString		strFindName;
+	int			iFindIndex = 0;
+	int			iSelCount = 0;
+	int			iStayIndex = 0;
+	CString		strStayName;
+
+	UpdateData(TRUE);
+
+	iStayIndex = m_ListBox_SettingHos_To_Once.GetCurSel();
+	if (-1 != iStayIndex) {
+		m_ListBox_SettingHos_To_Once.GetText(iStayIndex, strStayName);
+	}
+
+	m_ListBox_SettingHos_To_Once.ResetContent();
+
+	for (auto& iter : m_TeamSetToList) {
+		m_ListBox_SettingHos_To_Once.AddString(iter);
+	}
+
+	iSelCount = m_ListBox_SettingHos_To_Multi.GetSelCount();
+	CString* pNames = new CString[iSelCount];
+	int		NowCount = 0;
+
+	for (int i = 0; i < m_ListBox_SettingHos_To_Multi.GetCount(); ++i)
+	{
+		if (m_ListBox_SettingHos_To_Multi.GetSel(i))
+		{
+			m_ListBox_SettingHos_To_Multi.GetText(i, pNames[NowCount]);
+			NowCount++;
+		}
+	}
+
+	for (int i = 0; i < iSelCount; ++i)
+	{
+		iFindIndex = m_ListBox_SettingHos_To_Once.FindStringExact(-1, pNames[i]);
+		m_ListBox_SettingHos_To_Once.DeleteString(iFindIndex);
+	}
+	
+	iFindIndex = m_ListBox_SettingHos_To_Once.FindStringExact(-1, strStayName);
+	m_ListBox_SettingHos_To_Once.SetCurSel(iFindIndex);
+
+	UpdateData(FALSE);
+
+	pNames = nullptr;
+	delete[] pNames;
 }

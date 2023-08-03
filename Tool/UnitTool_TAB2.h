@@ -48,4 +48,6 @@ public:
 	CListBox m_ListBox_SettingHos_To_Multi;
 	
 	CString m_Hos_Cap[2];
+	afx_msg void OnListBox_Setting_To_Once();
+	afx_msg void OnListBox_Setting_To_Multi();
 };

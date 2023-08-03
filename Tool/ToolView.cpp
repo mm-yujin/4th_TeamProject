@@ -202,20 +202,23 @@ void CToolView::OnMouseMove(UINT nFlags, CPoint point)
 {
 	CScrollView::OnMouseMove(nFlags, point);
 
-	//if (GetAsyncKeyState(VK_LBUTTON))
-	//{
-	//	CMainFrame*		pMainFrm = dynamic_cast<CMainFrame*>(AfxGetApp()->GetMainWnd());
-	//	CMyForm*		pMyForm = dynamic_cast<CMyForm*>(pMainFrm->m_SecondSplitter.GetPane(1, 0));
-	//	CMapTool*		pMapTool = &(pMyForm->m_MapTool);
+	if (GetAsyncKeyState(VK_LBUTTON) & 0x8000)
+	{
+		CMainFrame*		pMainFrm = dynamic_cast<CMainFrame*>(AfxGetApp()->GetMainWnd());
+		CMyForm*		pMyForm = dynamic_cast<CMyForm*>(pMainFrm->m_SecondSplitter.GetPane(1, 0));
+		CMapTool*		pMapTool = &(pMyForm->m_MapTool);
 
-	//	m_pTerrain->Tile_Change(D3DXVECTOR3((float)point.x + GetScrollPos(0),
-	//		(float)point.y + GetScrollPos(1), 0.f), pMapTool->m_iDrawID);
+		m_pTerrain->Tile_Change(D3DXVECTOR3((float)point.x + GetScrollPos(0),
+			(float)point.y + GetScrollPos(1), 0.f), pMapTool->m_iDrawID);
 
-	//	Invalidate(FALSE);
+		Invalidate(FALSE);
 
-	//	
-	//	CMiniView*		pMiniView = dynamic_cast<CMiniView*>(pMainFrm->m_SecondSplitter.GetPane(0, 0));
+		
+		CMiniView*		pMiniView = dynamic_cast<CMiniView*>(pMainFrm->m_SecondSplitter.GetPane(0, 0));
 
-	//	pMiniView->Invalidate(FALSE);
-	//}
+		pMiniView->Invalidate(FALSE);
+	}
 }
+
+
+
