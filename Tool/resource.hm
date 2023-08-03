@@ -1,0 +1,4 @@
+// Microsoft Visual C++ generated Help ID include file.
+// Used by Tool.rc
+//
+#define HIDCANCEL                       0x813b0002    // IDD_CLUA_Script

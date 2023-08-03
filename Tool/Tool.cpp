@@ -70,13 +70,14 @@ BOOL CToolApp::InitInstance()
 
 	CWinAppEx::InitInstance();
 
-
 	// OLE 라이브러리를 초기화합니다.
 	if (!AfxOleInit())
 	{
 		AfxMessageBox(IDP_OLE_INIT_FAILED);
 		return FALSE;
 	}
+
+	AfxInitRichEdit();
 
 	AfxEnableControlContainer();
 

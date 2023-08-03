@@ -195,6 +195,7 @@
   <ItemGroup>
     <ClInclude Include="Device.h" />
     <ClInclude Include="FileInfo.h" />
+    <ClInclude Include="LuaRichEdit.h" />
     <ClInclude Include="LUA_Script.h" />
     <ClInclude Include="MainFrm.h" />
     <ClInclude Include="MapTool.h" />
@@ -221,6 +222,7 @@
   <ItemGroup>
     <ClCompile Include="Device.cpp" />
     <ClCompile Include="FileInfo.cpp" />
+    <ClCompile Include="LuaRichEdit.cpp" />
     <ClCompile Include="LUA_Script.cpp" />
     <ClCompile Include="MainFrm.cpp" />
     <ClCompile Include="MapTool.cpp" />
@@ -251,6 +253,7 @@
     <ResourceCompile Include="Tool.rc" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="resource.hm" />
     <None Include="res\Tool.rc2" />
   </ItemGroup>
   <ItemGroup>

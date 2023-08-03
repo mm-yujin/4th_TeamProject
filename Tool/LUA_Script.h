@@ -4,10 +4,10 @@
 #include "afxwin.h"
 
 #include "Include.h"
+#include "LuaRichEdit.h"
 
 
 // CLUA_Script 대화 상자
-
 class CLUA_Script : public CDialog
 {
 	DECLARE_DYNAMIC(CLUA_Script)
@@ -25,4 +25,15 @@ protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV 지원입니다.
 
 	DECLARE_MESSAGE_MAP()
+
+public:
+	CListCtrl				m_ListCtrl;
+	vector<CSliderCtrl*>	m_vecSlider;
+	CLuaRichEdit			m_RichEdit;
+
+public:
+	afx_msg virtual BOOL OnInitDialog() override;
+	void AddSlider(int iIndex);
+	afx_msg void OnEnUpdateLuaEdit();
+	afx_msg void OnSaveLua();
 };

@@ -55,14 +55,17 @@
 #define IDC_SLIDER6                     1029
 #define IDC_CHECK4                      1032
 #define IDC_TAB_Main                    1036
+#define IDC_LUA_LIST                    1051
+#define IDC_LUA_EDIT                    1059
+#define IDC_LUA_SAVE                    1062
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        322
+#define _APS_NEXT_RESOURCE_VALUE        323
 #define _APS_NEXT_COMMAND_VALUE         32771
-#define _APS_NEXT_CONTROL_VALUE         1037
+#define _APS_NEXT_CONTROL_VALUE         1063
 #define _APS_NEXT_SYMED_VALUE           317
 #endif
 #endif
