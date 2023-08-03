@@ -64,6 +64,9 @@ HRESULT CTextureMgr::Insert_Texture(const TCHAR * pFilePath, TEXTYPE eType, cons
 
 		m_mapTex.insert({ pObjKey, pTexture });
 	}
+	// 멀티 텍스처일 때 59번 줄의 코드를 재귀적으로 실행하기 위한 예외처리
+	else if (TEX_MULTI == eType)
+		iter->second->Insert_Texture(pFilePath, pStateKey, iCnt);
 	
 	return S_OK;
 }
