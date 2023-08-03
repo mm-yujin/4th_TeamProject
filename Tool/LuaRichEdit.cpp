@@ -36,6 +36,20 @@ UINT CLuaRichEdit::OnGetDlgCode()
 
 BOOL CLuaRichEdit::PreTranslateMessage(MSG* pMsg)
 {
+    // 텍스트 색상 변경
+    /*long iStart, iEnd;
+    GetSel(iStart, iEnd);
+
+    CHARFORMAT cf;
+    cf.cbSize = sizeof(cf);
+    cf.dwMask = CFM_COLOR;
+    cf.crTextColor = 0xFF0000FF;
+
+    SetSel(iStart, iEnd);
+    SetSelectionCharFormat(cf);
+
+    SetSel(iStart, iStart);*/
+
     if (pMsg->message == WM_KEYDOWN && pMsg->wParam == VK_TAB)
     {
         CString strNewText = _T("\t");

@@ -51,8 +51,8 @@ HRESULT CMainGame::Initialize(void)
 
 void CMainGame::Update(void)
 {
-	CSceneMgr::Get_Instance()->Update_SceneMgr();
 	CTimeMgr::Get_Instance()->Update();
+	CSceneMgr::Get_Instance()->Update_SceneMgr();
 }
 
 void CMainGame::Late_Update(void)

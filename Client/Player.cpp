@@ -3,6 +3,7 @@
 #include "TextureMgr.h"
 #include "Device.h"
 #include "TimeMgr.h"
+#include "LuaMgr.h"
 
 CPlayer::CPlayer()
 {
@@ -20,6 +21,8 @@ HRESULT CPlayer::Initialize(void)
 	m_wstrStateKey = L"Dash";
 
 	m_tFrame = { 0.f, 10.f };
+
+	m_fSpeed = 300.f;
 
 	return S_OK;
 }
@@ -90,9 +93,15 @@ void CPlayer::Render(void)
 		&D3DXVECTOR3(fCenterX, fCenterY, 0.f), // 출력할 이미지의 중심 축에 대한 vector3 구조체 포인터, nullptr인 경우 0, 0이 중심 좌표
 		nullptr, // 위치 좌표에 따른 vector3 구조체 포인어
 		D3DCOLOR_ARGB(255, 255, 255, 255));
-
+	LoadLuaDamage();
 }
 
 void CPlayer::Release(void)
 {
+}
+
+void CPlayer::LoadLuaDamage()
+{
+	//CLuaMgr::Get_Instance()->Test(1);
+	CLuaMgr::Get_Instance()->Call_Lua("Damage", 10, 10);
 }
