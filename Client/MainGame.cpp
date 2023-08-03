@@ -82,5 +82,6 @@ void CMainGame::Release(void)
 	CTextureMgr::Get_Instance()->Destroy_Instance();
 	CSceneMgr::Get_Instance()->Destroy_Instance();
 	m_pGraphicDev->Destroy_Instance();
+	CTimeMgr::Get_Instance()->Destroy_Instance();
 }
 
