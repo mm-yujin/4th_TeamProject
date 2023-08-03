@@ -202,7 +202,7 @@ void CToolView::OnMouseMove(UINT nFlags, CPoint point)
 {
 	CScrollView::OnMouseMove(nFlags, point);
 
-	if (GetAsyncKeyState(VK_LBUTTON))
+	if (GetAsyncKeyState(VK_LBUTTON) & 0x8000)
 	{
 		CMainFrame*		pMainFrm = dynamic_cast<CMainFrame*>(AfxGetApp()->GetMainWnd());
 		CMyForm*		pMyForm = dynamic_cast<CMyForm*>(pMainFrm->m_SecondSplitter.GetPane(1, 0));
@@ -219,3 +219,6 @@ void CToolView::OnMouseMove(UINT nFlags, CPoint point)
 		pMiniView->Invalidate(FALSE);
 	}
 }
+
+
+
