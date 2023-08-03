@@ -1,3 +1,3 @@
-function Test()
+function Damage()
 	return 1
 end

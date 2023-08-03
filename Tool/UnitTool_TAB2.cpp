@@ -56,6 +56,8 @@ BEGIN_MESSAGE_MAP(UnitTool_TAB2, CDialogEx)
 	ON_LBN_SELCHANGE(IDC_LIST6, &UnitTool_TAB2::OnListBox_Setting_To_Multi)
 	ON_NOTIFY(NM_CUSTOMDRAW, IDC_SLIDER1, &UnitTool_TAB2::OnNM_HOS_drawSlider1)
 	ON_NOTIFY(NM_CUSTOMDRAW, IDC_SLIDER2, &UnitTool_TAB2::OnNM_HOS_drawSlider2)
+	ON_BN_CLICKED(IDC_BUTTON8, &UnitTool_TAB2::OnApplyButton)
+	ON_BN_CLICKED(IDC_BUTTON2, &UnitTool_TAB2::OnResetButton)
 END_MESSAGE_MAP()
 
 
@@ -83,7 +85,6 @@ void UnitTool_TAB2::OnAddTeamButton()
 
 		m_TeamMainList.push_back(m_str_AddTeam);
 	}
-
 
 	m_ListBox_ViewHos_From.ResetContent();
 	m_ListBox_SettingHos_From.ResetContent();
@@ -393,4 +394,62 @@ void UnitTool_TAB2::OnNM_HOS_drawSlider2(NMHDR* pNMHDR, LRESULT* pResult)
 
 	SetDlgItemText(IDC_EDIT8, szCAP);
 	*pResult = 0;
+}
+
+void UnitTool_TAB2::OnApplyButton()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+
+	if ((LB_ERR == m_ListBox_SettingHos_From.GetCurSel() &&
+		LB_ERR == m_ListBox_SettingHos_To_Once.GetCurSel()) ||
+
+		(LB_ERR == m_ListBox_SettingHos_From.GetCurSel() &&
+		LB_ERR == m_ListBox_SettingHos_To_Multi.GetCurSel()) ||
+
+		(-1 == m_ListBox_SettingHos_To_Once.GetCurSel() &&
+		0 == m_ListBox_SettingHos_To_Multi.GetCurSel()) ||   //왜 0???
+
+		(LB_ERR == m_ListBox_SettingHos_To_Once.GetCurSel() &&
+		LB_ERR == m_ListBox_SettingHos_To_Multi.GetCurSel())
+		)
+	{
+		AfxMessageBox(L"From 또는 To의 선택 값이 없습니다. 확인하고 다시 시도해주세요.");
+	}
+	else {
+		int iIndex = m_ListBox_SettingHos_From.GetCurSel();
+		m_ListBox_SettingHos_From.GetText(iIndex, )
+
+
+		m_Hostility_Map.insert()
+
+
+		
+
+
+
+	}
+}
+
+
+void UnitTool_TAB2::OnResetButton()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	UpdateData(TRUE);
+
+	m_ListBox_ViewHos_From.ResetContent();
+	m_ListBox_SettingHos_From.ResetContent();
+	m_ListBox_SettingHos_To_Once.ResetContent();
+	m_ListBox_SettingHos_To_Multi.ResetContent();
+
+	if (!m_TeamMainList.empty())
+	{
+		for (auto& iter : m_TeamMainList) {
+			m_ListBox_ViewHos_From.AddString(iter);
+			m_ListBox_SettingHos_From.AddString(iter);
+		}
+	}
+
+	m_str_AddTeam = L"";
+
+	UpdateData(FALSE);
 }

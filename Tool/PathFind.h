@@ -24,7 +24,13 @@ protected:
 
 	DECLARE_MESSAGE_MAP()
 public:
-	afx_msg void OnDropFiles(HDROP hDropInfo);
+	afx_msg void OnListBox();
 	afx_msg void OnSaveData();
 	afx_msg void OnLoadData();
+	afx_msg void OnDropFiles(HDROP hDropInfo);
+
+	CListBox m_ListBox;
+	list<IMGPATH*>		m_PathList;
+
+
 };

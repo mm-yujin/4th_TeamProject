@@ -33,7 +33,7 @@ public:
 	list<CString>	m_TeamViewToList;
 	list<CString>	m_TeamSetToList;
 
-	CMap<CString, LPCTSTR, int, int> m_HostilityMap;
+	map<CString, map<CString, int>> m_Hostility_Map;
 	//MainList와 ToList의 조합으로 키값 정하기. 사용 전 값이 있나 확인 필수
 
 	afx_msg void OnAddTeamButton();
@@ -60,4 +60,6 @@ public:
 	afx_msg void OnNM_HOS_drawSlider2(NMHDR* pNMHDR, LRESULT* pResult);
 	CEdit m_Edit_Slider5;
 	CEdit m_Edit_Slider8;
+	afx_msg void OnApplyButton();
+	afx_msg void OnResetButton();
 };

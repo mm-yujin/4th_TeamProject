@@ -13,12 +13,10 @@ CFileInfo::~CFileInfo()
 
 CString CFileInfo::ConvertRelativePath(CString strFullPath)
 {
-	TCHAR	szRelativePath[MAX_PATH] = L"";	// 상대 경로를 저장할 배열
-	TCHAR	szCurDirPath[MAX_PATH] = L""; // 현재의 절대 경로를 저장할 배열
+	TCHAR	szRelativePath[MAX_PATH] = L"";
+	TCHAR	szCurDirPath[MAX_PATH] = L"";
 
 	GetCurrentDirectory(MAX_PATH, szCurDirPath);
-
-	//szCurDirPath에서 strFullPath로 가는 상대 경로를 구해서 szRelativePath에 저장, 단, 같은 드라이브 내에서만 가능
 
 	PathRelativePathTo(szRelativePath, 
 		szCurDirPath, 
@@ -27,4 +25,84 @@ CString CFileInfo::ConvertRelativePath(CString strFullPath)
 		FILE_ATTRIBUTE_DIRECTORY);
 	
 	return CString(szRelativePath);
+}
+
+
+void CFileInfo::DirInfoExtration(const wstring& wstrPath, list<IMGPATH*>& rPathList)
+{
+	CFileFind		Find;
+
+	wstring		wstrFilePath = wstrPath + L"\\*.*";
+	BOOL		bContinue = Find.FindFile(wstrFilePath.c_str());
+
+	while (bContinue)
+	{
+		bContinue = Find.FindNextFile();
+
+		if (Find.IsDots())
+			continue;
+
+		else if (Find.IsDirectory())
+		{
+			DirInfoExtration(wstring(Find.GetFilePath()), rPathList);
+		}
+		else
+		{
+			if (Find.IsSystem())
+				continue;
+
+			IMGPATH* pImgPath = new IMGPATH;
+			TCHAR			szPathBuf[MAX_STR] = L"";
+
+			lstrcpy(szPathBuf, Find.GetFilePath().GetString());
+			PathRemoveFileSpec(szPathBuf);
+
+			pImgPath->iCount = DirFileCount(szPathBuf);
+
+			wstring		wstrTextureName = Find.GetFileTitle().GetString();
+
+			wstrTextureName = wstrTextureName.substr(0, wstrTextureName.size() - 1) + L"%d.png";
+
+			TCHAR	szBuf[MAX_PATH] = L"";
+			lstrcpy(szBuf, Find.GetFilePath().GetString());
+			
+			PathRemoveFileSpec(szBuf);
+			PathCombine(szBuf, szBuf, wstrTextureName.c_str());
+			pImgPath->wstrPath = ConvertRelativePath(szBuf);
+			
+			PathRemoveFileSpec(szBuf);
+			pImgPath->wstrStateKey = PathFindFileName(szBuf);
+
+			PathRemoveFileSpec(szBuf);
+			pImgPath->wstrObjKey = PathFindFileName(szBuf);
+
+			rPathList.push_back(pImgPath);
+
+			bContinue = false;
+		}
+	}
+}
+
+int CFileInfo::DirFileCount(const wstring& wstrPath)
+{
+	int				iCount = 0;
+	CFileFind		Find;
+
+	wstring		wstrFilePath = wstrPath + L"\\*.*";
+	BOOL		bContinue = Find.FindFile(wstrFilePath.c_str());
+
+	while (bContinue)
+	{
+		bContinue = Find.FindNextFile();
+
+		if (Find.IsDots())
+			continue;
+
+		if (Find.IsSystem())
+			continue;
+
+		++iCount;
+	}
+
+	return iCount;
 }
