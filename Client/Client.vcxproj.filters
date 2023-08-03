@@ -49,6 +49,9 @@
     <Filter Include="03. Scene\01. Stage">
       <UniqueIdentifier>{739641d6-dddd-4857-b1b9-5dc9936b9abb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01. Manager\Obj\01. Player">
+      <UniqueIdentifier>{029d7bf5-4664-478a-8b55-b5a6bac5299c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -105,6 +108,9 @@
     <ClInclude Include="Stage.h">
       <Filter>03. Scene\01. Stage</Filter>
     </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>01. Manager\Obj\01. Player</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -151,6 +157,9 @@
     </ClCompile>
     <ClCompile Include="Stage.cpp">
       <Filter>03. Scene\01. Stage</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>01. Manager\Obj\01. Player</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

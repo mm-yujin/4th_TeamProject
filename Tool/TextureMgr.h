@@ -13,6 +13,8 @@ private:
 public:
 	const TEXINFO * Get_Texture(const TCHAR * pObjKey = L"", const TCHAR * pStateKey = L"", const int & iCnt = 0) ;
 	HRESULT Insert_Texture(const TCHAR * pFilePath, TEXTYPE eType, const TCHAR * pObjKey, const TCHAR * pStateKey = L"", const int & iCnt = 0) ;
+	HRESULT	ReadImgPath(const wstring& wstrFilePath);
+
 	void Release() ;
 	
 private:

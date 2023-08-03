@@ -26,6 +26,8 @@
 #include <algorithm>
 #include <string>
 
+#include <fstream>
+
 #ifdef _DEBUG
 
 #define _CRTDBG_MAP_ALLOC

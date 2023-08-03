@@ -35,7 +35,15 @@
 
 
 
+// 루아 라이브러리 추가
+extern "C"
+{
+#include "lua.h"
+#include "lualib.h"
+#include "lauxlib.h"
+}
 
+#pragma comment (lib, "lua5.1.lib")
 
 
 
@@ -60,5 +68,8 @@
 #include <string>
 #include <map>
 #include <algorithm>
+#include <afxdlgs.h>
+
+#include <fstream>
 
 using namespace std;

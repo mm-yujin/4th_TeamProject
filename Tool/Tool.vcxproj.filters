@@ -159,6 +159,9 @@
     <ClInclude Include="UnitTool_TAB2.h">
       <Filter>06. FormView\DIalog\00. UnitTool\TAB2</Filter>
     </ClInclude>
+    <ClInclude Include="LuaRichEdit.h">
+      <Filter>06. FormView\DIalog\04. LUA</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Tool.cpp">
@@ -227,6 +230,9 @@
     <ClCompile Include="UnitTool_TAB2.cpp">
       <Filter>06. FormView\DIalog\00. UnitTool\TAB2</Filter>
     </ClCompile>
+    <ClCompile Include="LuaRichEdit.cpp">
+      <Filter>06. FormView\DIalog\04. LUA</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Tool.rc">
@@ -236,6 +242,9 @@
   <ItemGroup>
     <None Include="res\Tool.rc2">
       <Filter>리소스 파일</Filter>
+    </None>
+    <None Include="resource.hm">
+      <Filter>헤더 파일</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
