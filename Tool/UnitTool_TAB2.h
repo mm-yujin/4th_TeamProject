@@ -39,7 +39,11 @@ public:
 	afx_msg void OnAddTeamButton();
 	afx_msg void OnListBox_ViewHos_From();
 	afx_msg void OnListBox_SettingHos_From();
-	int m_Slider_Hos[2];
+
+
+	CSliderCtrl m_Slider[2];
+	int m_iSlider_Hos[2];
+
 	CListBox m_ListBox_ViewHos_From;
 	CListBox m_ListBox_ViewHos_To;
 	
@@ -50,4 +54,10 @@ public:
 	CString m_Hos_Cap[2];
 	afx_msg void OnListBox_Setting_To_Once();
 	afx_msg void OnListBox_Setting_To_Multi();
+
+	virtual BOOL OnInitDialog();
+	afx_msg void OnNM_HOS_drawSlider1(NMHDR* pNMHDR, LRESULT* pResult);
+	afx_msg void OnNM_HOS_drawSlider2(NMHDR* pNMHDR, LRESULT* pResult);
+	CEdit m_Edit_Slider5;
+	CEdit m_Edit_Slider8;
 };
