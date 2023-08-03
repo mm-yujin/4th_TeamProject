@@ -28,6 +28,16 @@
 
 #include <fstream>
 
+// 루아 라이브러리 포함
+extern "C"
+{
+#include "lua.h"
+#include "lualib.h"
+#include "lauxlib.h"
+}
+
+#pragma comment (lib, "lua5.1.lib")
+
 #ifdef _DEBUG
 
 #define _CRTDBG_MAP_ALLOC

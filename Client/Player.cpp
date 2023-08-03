@@ -3,6 +3,7 @@
 #include "TextureMgr.h"
 #include "Device.h"
 #include "TimeMgr.h"
+#include "LuaMgr.h"
 
 CPlayer::CPlayer()
 {
@@ -21,12 +22,14 @@ HRESULT CPlayer::Initialize(void)
 
 	m_tFrame = { 0.f, 10.f };
 
+	m_fSpeed = 300.f;
+
 	return S_OK;
 }
 
 int CPlayer::Update(void)
 {
-	if (0.f > ::Get_Mouse().x)
+	/*if (0.f > ::Get_Mouse().x)
 		m_vScroll.x += 100.f * CTimeMgr::Get_Instance()->Get_TimeDelta();
 
 	if (WINCX < ::Get_Mouse().x)
@@ -36,7 +39,7 @@ int CPlayer::Update(void)
 		m_vScroll.y += 100.f * CTimeMgr::Get_Instance()->Get_TimeDelta();
 
 	if (WINCY < ::Get_Mouse().y)
-		m_vScroll.y -= 100.f * CTimeMgr::Get_Instance()->Get_TimeDelta();
+		m_vScroll.y -= 100.f * CTimeMgr::Get_Instance()->Get_TimeDelta();*/
 
 	
 	if (GetAsyncKeyState(VK_RBUTTON) & 0x8000)
@@ -91,8 +94,29 @@ void CPlayer::Render(void)
 		nullptr, // 위치 좌표에 따른 vector3 구조체 포인어
 		D3DCOLOR_ARGB(255, 255, 255, 255));
 
+	TCHAR			szBuf[MIN_STR] = L"";
+
+	//double elapsedMicroseconds = measureFunctionPerformance(&CPlayer::LoadLuaDamage, this);
+
+	swprintf_s(szBuf, L"%d", LoadLuaDamage());
+
+	CDevice::Get_Instance()->Get_Font()->DrawTextW(CDevice::Get_Instance()->Get_Sprite(),
+		szBuf,
+		lstrlen(szBuf),
+		nullptr,
+		0,
+		D3DCOLOR_ARGB(255, 255, 255, 255));
 }
 
 void CPlayer::Release(void)
 {
+}
+
+int CPlayer::LoadLuaDamage()
+{
+	int t = 0;
+
+	CLuaMgr::Get_Instance()->Call_Lua("../Lua/Script/Damage.lua", "Damage", 10, 10);
+	CLuaMgr::Get_Instance()->Return_Lua(t);
+	return t;
 }
