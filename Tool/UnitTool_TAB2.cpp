@@ -417,10 +417,10 @@ void UnitTool_TAB2::OnApplyButton()
 	}
 	else {
 		int iIndex = m_ListBox_SettingHos_From.GetCurSel();
-		m_ListBox_SettingHos_From.GetText(iIndex, )
+		//m_ListBox_SettingHos_From.GetText(iIndex, )
 
 
-		m_Hostility_Map.insert()
+		//m_Hostility_Map.insert()
 
 
 		
