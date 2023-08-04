@@ -86,6 +86,64 @@ void UnitTool_TAB2::OnAddTeamButton()
 		m_TeamMainList.push_back(m_str_AddTeam);
 	}
 
+	CString Before, Before2;
+	pair<CString, CString> KeyValue, NowValue;
+
+	if (m_Hostility_Map.empty()) {
+		for (auto& iter = m_TeamMainList.begin(); iter != m_TeamMainList.end(); ++iter)
+		{
+			for (auto& iter2 = m_TeamMainList.begin(); iter2 != m_TeamMainList.end(); ++iter2)
+			{
+				KeyValue = make_pair(Before, Before2);
+				NowValue = make_pair(*iter, *iter2);
+
+				if ((iter != iter2) && (KeyValue != NowValue))
+				{
+					CString source = *iter;
+					CString target = *iter2;
+					int hostilityValue = 50;
+
+					//m_inner_Maplist.push_back(pair<CString, CString>(source, target));
+					m_inner_Maplist.insert(pair<CString, CString>(source, target));
+					m_Hostility_Map.emplace(m_inner_Maplist, hostilityValue);
+
+					m_inner_Maplist.clear();
+
+					Before = source;
+					Before2 = target;
+				}
+			}
+		}
+	}
+	else if (!m_Hostility_Map.empty())
+	{
+		for (auto iter = m_TeamMainList.begin(); iter != m_TeamMainList.end(); ++iter)
+		{
+			CString source = *iter;
+			CString target = m_str_AddTeam;
+			int hostilityValue = 50;
+
+			KeyValue = make_pair(Before, Before2);
+			NowValue = make_pair(*iter, m_str_AddTeam);
+
+			if ((source != m_str_AddTeam) && (KeyValue != NowValue))
+			{
+				m_inner_Maplist.insert(pair<CString, CString>(source, target));
+				m_inner_Maplist.insert(pair<CString, CString>(target, source));
+
+				if (m_Hostility_Map.find(m_inner_Maplist) == m_Hostility_Map.end())
+				{
+					m_Hostility_Map.emplace(m_inner_Maplist, hostilityValue);
+				}
+
+				m_inner_Maplist.clear();
+
+				Before = source;
+				Before2 = target;
+			}
+		}
+	}
+
 	m_ListBox_ViewHos_From.ResetContent();
 	m_ListBox_SettingHos_From.ResetContent();
 
@@ -122,9 +180,78 @@ void UnitTool_TAB2::OnListBox_ViewHos_From()
 			m_TeamViewToList.push_back(iter);
 	}
 
+	multimap<CString, CString> searchKey;
 	for (auto& iter : m_TeamViewToList) {
-		m_ListBox_ViewHos_To.AddString(iter);
+		if (strFindName != iter) {
+			//list<pair<CString, CString>> searchKey;
+			//searchKey.push_back(make_pair(strFindName, iter));
+			searchKey.insert(make_pair(strFindName, iter));
+		}
 	}
+
+	const size_t sizem = searchKey.size();
+	vector<CString> View;
+	int iCount = 0;
+
+	for (auto& iter2 : searchKey)
+	{
+		for (auto& iter : m_Hostility_Map) {
+				int Hos = iter.second;
+				CString Level, FindStr;
+			
+			if (iter.first != searchKey)
+			{
+
+			if (Hos >= 85)							{	Level = L"강한 적대";	}
+			else if ((Hos >= 70) && (Hos < 85))		{	Level = L"적대";		}
+			else if ((Hos >= 55) && (Hos < 70))		{	Level = L"약한 적대";	}
+			else if ((Hos >= 45) && (Hos < 55))		{	Level = L"보통";		}
+			else if ((Hos >= 30) && (Hos < 45))		{	Level = L"약한 우호";	}
+			else if ((Hos >= 15) && (Hos < 30))		{	Level = L"우호";		}
+			else if ((Hos >= 0) && (Hos < 20))		{	Level = L"강한 우호";	}
+
+			if (iCount == 0) {
+				View.push_back(strFindName + "->" + iter2.second + " | " + Level);
+				++iCount;
+			}
+			else if (iCount > 0) {
+				int NowCount = iCount;
+				CString sTemp = strFindName + "->" + iter2.second;
+				int iFind;
+
+				for (size_t i = 0; i < View.size(); ++i)
+				{
+					iFind = View[i].Find(L"|");
+					if (iFind >= 0) {
+						FindStr = View[i].Left(iFind);
+					}
+					if (FindStr == sTemp)
+					{
+						View[i] = sTemp + " | " + Level;
+						++iCount;
+						//break;
+					}
+				}
+				if (FindStr != sTemp)
+				{
+					View.push_back(sTemp + " | " + Level);
+					++iCount;
+					//break;
+				}
+				
+			}
+			}
+		}
+	}
+
+	sort(View.begin(), View.end());
+	View.erase(unique(View.begin(), View.end()), View.end());
+
+	for (size_t i = 0; i < View.size(); ++i)
+	{
+		m_ListBox_ViewHos_To.AddString(View[i]);
+	}
+
 
 	UpdateData(FALSE);
 }
@@ -347,20 +474,13 @@ void UnitTool_TAB2::OnNM_HOS_drawSlider1(NMHDR* pNMHDR, LRESULT* pResult)
 
 	m_iSlider_Hos[0] = m_Slider[0].GetPos();
 
-	if (m_iSlider_Hos[0] >= 85)
-	{	szCAP = L"강한 적대";	}
-	else if ((m_iSlider_Hos[0] >= 70) && (m_iSlider_Hos[0] < 85))
-	{	szCAP = L"적대";	}
-	else if ((m_iSlider_Hos[0] >= 55) && (m_iSlider_Hos[0] < 70))
-	{	szCAP = L"약한 적대";	}
-	else if ((m_iSlider_Hos[0] >= 45) && (m_iSlider_Hos[0] < 55))
-	{	szCAP = L"보통";	}
-	else if ((m_iSlider_Hos[0] >= 30) && (m_iSlider_Hos[0] < 45))
-	{	szCAP = L"약한 우호";	}
-	else if ((m_iSlider_Hos[0] >= 15) && (m_iSlider_Hos[0] < 30))
-	{	szCAP = L"우호";	}
-	else if ((m_iSlider_Hos[0] >= 0) && (m_iSlider_Hos[0] < 20))
-	{	szCAP = L"강한 우호";	}
+	if (m_iSlider_Hos[0] >= 85)										{	szCAP = L"강한 적대";	}
+	else if ((m_iSlider_Hos[0] >= 70) && (m_iSlider_Hos[0] < 85))	{	szCAP = L"적대";		}
+	else if ((m_iSlider_Hos[0] >= 55) && (m_iSlider_Hos[0] < 70))	{	szCAP = L"약한 적대";	}
+	else if ((m_iSlider_Hos[0] >= 45) && (m_iSlider_Hos[0] < 55))	{	szCAP = L"보통";		}
+	else if ((m_iSlider_Hos[0] >= 30) && (m_iSlider_Hos[0] < 45))	{	szCAP = L"약한 우호";	}
+	else if ((m_iSlider_Hos[0] >= 15) && (m_iSlider_Hos[0] < 30))	{	szCAP = L"우호";		}
+	else if ((m_iSlider_Hos[0] >= 0) && (m_iSlider_Hos[0] < 20))	{	szCAP = L"강한 우호";	}
 
 	SetDlgItemText(IDC_EDIT5, szCAP);
 
@@ -377,20 +497,13 @@ void UnitTool_TAB2::OnNM_HOS_drawSlider2(NMHDR* pNMHDR, LRESULT* pResult)
 
 	m_iSlider_Hos[1] = m_Slider[1].GetPos();
 
-	if (m_iSlider_Hos[1] >= 85)
-	{	szCAP = L"강한 적대";	}
-	else if ((m_iSlider_Hos[1] >= 70) && (m_iSlider_Hos[1] < 85))
-	{	szCAP = L"적대";	}
-	else if ((m_iSlider_Hos[1] >= 55) && (m_iSlider_Hos[1] < 70))
-	{	szCAP = L"약한 적대";	}
-	else if ((m_iSlider_Hos[1] >= 45) && (m_iSlider_Hos[1] < 55))
-	{	szCAP = L"보통";	}
-	else if ((m_iSlider_Hos[1] >= 30) && (m_iSlider_Hos[1] < 45))
-	{	szCAP = L"약한 우호";	}
-	else if ((m_iSlider_Hos[1] >= 15) && (m_iSlider_Hos[1] < 30))
-	{	szCAP = L"우호";	}
-	else if ((m_iSlider_Hos[1] >= 0) && (m_iSlider_Hos[1] < 20))
-	{	szCAP = L"강한 우호";	}
+	if (m_iSlider_Hos[1] >= 85)										{	szCAP = L"강한 적대";	}
+	else if ((m_iSlider_Hos[1] >= 70) && (m_iSlider_Hos[1] < 85))	{	szCAP = L"적대";		}
+	else if ((m_iSlider_Hos[1] >= 55) && (m_iSlider_Hos[1] < 70))	{	szCAP = L"약한 적대";	}
+	else if ((m_iSlider_Hos[1] >= 45) && (m_iSlider_Hos[1] < 55))	{	szCAP = L"보통";		}
+	else if ((m_iSlider_Hos[1] >= 30) && (m_iSlider_Hos[1] < 45))	{	szCAP = L"약한 우호";	}
+	else if ((m_iSlider_Hos[1] >= 15) && (m_iSlider_Hos[1] < 30))	{	szCAP = L"우호";		}
+	else if ((m_iSlider_Hos[1] >= 0) && (m_iSlider_Hos[1] < 20))	{	szCAP = L"강한 우호";	}
 
 	SetDlgItemText(IDC_EDIT8, szCAP);
 	*pResult = 0;
@@ -399,6 +512,11 @@ void UnitTool_TAB2::OnNM_HOS_drawSlider2(NMHDR* pNMHDR, LRESULT* pResult)
 void UnitTool_TAB2::OnApplyButton()
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	CString strFromName;
+	CString strToOnceName;
+	vector<CString> vecstrToMultieName;
+	int		SelCount = 0;
+	int		NowCount = 0;
 
 	if ((LB_ERR == m_ListBox_SettingHos_From.GetCurSel() &&
 		LB_ERR == m_ListBox_SettingHos_To_Once.GetCurSel()) ||
@@ -417,17 +535,55 @@ void UnitTool_TAB2::OnApplyButton()
 	}
 	else {
 		int iIndex = m_ListBox_SettingHos_From.GetCurSel();
-		m_ListBox_SettingHos_From.GetText(iIndex, )
+		m_ListBox_SettingHos_From.GetText(iIndex, strFromName);
 
+		int iIndex2 = m_ListBox_SettingHos_To_Once.GetCurSel();
+		m_ListBox_SettingHos_To_Once.GetText(iIndex2, strToOnceName);
 
-		m_Hostility_Map.insert()
+		SelCount = m_ListBox_SettingHos_To_Multi.GetSelCount();
+		vecstrToMultieName.clear();
 
+		if (SelCount >= 1) {
 
-		
+			for (int i = 0; i < m_ListBox_SettingHos_To_Multi.GetCount(); ++i)
+			{
+				if (m_ListBox_SettingHos_To_Multi.GetSel(i))
+				{
+					CString Temp;
+					m_ListBox_SettingHos_To_Multi.GetText(i, Temp);
+					vecstrToMultieName.push_back(Temp);
+					++NowCount;
+				}
+			}
+		}
 
-
-
+		if (((strFromName != L"") && (strToOnceName != L"")) || 
+			((strFromName != L"") && (NowCount != 0)))
+		{
+			if ((strFromName != L"") && (strToOnceName != L"")) {
+				multimap<CString, CString> searchKey;
+				searchKey.emplace(strFromName, strToOnceName);
+				//auto iter = m_Hostility_Map.find(searchKey);
+				//iter->second = m_iSlider_Hos[0];
+				m_Hostility_Map[searchKey] = m_iSlider_Hos[0];
+			}
+			if ((strFromName != L"") && (NowCount != 0))
+			{
+				multimap<CString, CString> searchKey2;
+				for (auto& veciter : vecstrToMultieName) {
+					searchKey2.emplace(strFromName, veciter);
+				}
+				for (auto& searchiter : searchKey2) {
+					//if (iter.first == searchKey2) {
+					//	iter.second = m_iSlider_Hos[1];
+					//}
+					m_Hostility_Map[searchKey2] = m_iSlider_Hos[1];
+				}
+			}
+		}
+		OnResetButton();
 	}
+
 }
 
 
@@ -437,6 +593,7 @@ void UnitTool_TAB2::OnResetButton()
 	UpdateData(TRUE);
 
 	m_ListBox_ViewHos_From.ResetContent();
+	m_ListBox_ViewHos_To.ResetContent();
 	m_ListBox_SettingHos_From.ResetContent();
 	m_ListBox_SettingHos_To_Once.ResetContent();
 	m_ListBox_SettingHos_To_Multi.ResetContent();
@@ -448,6 +605,9 @@ void UnitTool_TAB2::OnResetButton()
 			m_ListBox_SettingHos_From.AddString(iter);
 		}
 	}
+
+	m_ListBox_ViewHos_From.SetCurSel(-1);
+	m_ListBox_SettingHos_From.SetCurSel(-1);
 
 	m_str_AddTeam = L"";
 
