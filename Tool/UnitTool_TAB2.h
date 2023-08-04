@@ -33,7 +33,11 @@ public:
 	list<CString>	m_TeamViewToList;
 	list<CString>	m_TeamSetToList;
 
-	map<CString, map<CString, int>> m_Hostility_Map;
+	//list<pair<CString, CString>> m_inner_Maplist;
+	//map<list<pair<CString, CString>>, int> m_Hostility_Map;
+	// 
+	multimap<CString, CString> m_inner_Maplist;
+	map<multimap<CString, CString>, int> m_Hostility_Map;
 	//MainList와 ToList의 조합으로 키값 정하기. 사용 전 값이 있나 확인 필수
 
 	afx_msg void OnAddTeamButton();
@@ -62,4 +66,8 @@ public:
 	CEdit m_Edit_Slider8;
 	afx_msg void OnApplyButton();
 	afx_msg void OnResetButton();
+
+	//bool operator++(const UnitTool_TAB2& i) const {
+	//	return evaluate < i.evaluate;
+	//}
 };
