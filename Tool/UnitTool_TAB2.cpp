@@ -94,23 +94,19 @@ void UnitTool_TAB2::OnAddTeamButton()
 		{
 			for (auto& iter2 = m_TeamMainList.begin(); iter2 != m_TeamMainList.end(); ++iter2)
 			{
-				KeyValue = make_pair(Before, Before2);
-				NowValue = make_pair(*iter, *iter2);
-
-				if ((iter != iter2) && (KeyValue != NowValue))
+				if (iter != iter2)
 				{
 					CString source = *iter;
 					CString target = *iter2;
 					int hostilityValue = 50;
 
 					//m_inner_Maplist.push_back(pair<CString, CString>(source, target));
-					m_inner_Maplist.insert(pair<CString, CString>(source, target));
-					m_Hostility_Map.emplace(m_inner_Maplist, hostilityValue);
+					//m_inner_Maplist.insert(pair<CString, CString>(source, target));
+					//m_Hostility_Map.emplace(m_inner_Maplist, hostilityValue);
+
+					m_Hostility_Map[*iter][*iter2] = hostilityValue;
 
 					m_inner_Maplist.clear();
-
-					Before = source;
-					Before2 = target;
 				}
 			}
 		}
@@ -123,23 +119,15 @@ void UnitTool_TAB2::OnAddTeamButton()
 			CString target = m_str_AddTeam;
 			int hostilityValue = 50;
 
-			KeyValue = make_pair(Before, Before2);
-			NowValue = make_pair(*iter, m_str_AddTeam);
-
-			if ((source != m_str_AddTeam) && (KeyValue != NowValue))
+			if (source != m_str_AddTeam)
 			{
-				m_inner_Maplist.insert(pair<CString, CString>(source, target));
-				m_inner_Maplist.insert(pair<CString, CString>(target, source));
+				//m_inner_Maplist.insert(pair<CString, CString>(source, target));
+				//m_inner_Maplist.insert(pair<CString, CString>(target, source));
 
-				if (m_Hostility_Map.find(m_inner_Maplist) == m_Hostility_Map.end())
-				{
-					m_Hostility_Map.emplace(m_inner_Maplist, hostilityValue);
-				}
+				m_Hostility_Map[source][target] = hostilityValue;
+				m_Hostility_Map[target][source] = hostilityValue;
 
 				m_inner_Maplist.clear();
-
-				Before = source;
-				Before2 = target;
 			}
 		}
 	}
@@ -180,27 +168,28 @@ void UnitTool_TAB2::OnListBox_ViewHos_From()
 			m_TeamViewToList.push_back(iter);
 	}
 
-	multimap<CString, CString> searchKey;
-	for (auto& iter : m_TeamViewToList) {
-		if (strFindName != iter) {
-			//list<pair<CString, CString>> searchKey;
-			//searchKey.push_back(make_pair(strFindName, iter));
-			searchKey.insert(make_pair(strFindName, iter));
-		}
-	}
+	//multimap<CString, CString> searchKey;
+	//for (auto& iter : m_TeamViewToList) {
+	//	if (strFindName != iter) {
+	//		//list<pair<CString, CString>> searchKey;
+	//		//searchKey.push_back(make_pair(strFindName, iter));
+	//		searchKey.insert(make_pair(strFindName, iter));
+	//	}
+	//}
 
-	const size_t sizem = searchKey.size();
+	//const size_t sizem = searchKey.size();
+
 	vector<CString> View;
 	int iCount = 0;
 
-	for (auto& iter2 : searchKey)
+	for (auto& iter2 : m_TeamViewToList)
 	{
-		for (auto& iter : m_Hostility_Map) {
+		for (auto& iter : m_Hostility_Map[iter2]) {
 				int Hos = iter.second;
 				CString Level, FindStr;
 			
-			if (iter.first != searchKey)
-			{
+			//if (iter.first != searchKey)
+			//{
 
 			if (Hos >= 85)							{	Level = L"강한 적대";	}
 			else if ((Hos >= 70) && (Hos < 85))		{	Level = L"적대";		}
@@ -210,37 +199,36 @@ void UnitTool_TAB2::OnListBox_ViewHos_From()
 			else if ((Hos >= 15) && (Hos < 30))		{	Level = L"우호";		}
 			else if ((Hos >= 0) && (Hos < 20))		{	Level = L"강한 우호";	}
 
-			if (iCount == 0) {
-				View.push_back(strFindName + "->" + iter2.second + " | " + Level);
-				++iCount;
-			}
-			else if (iCount > 0) {
-				int NowCount = iCount;
-				CString sTemp = strFindName + "->" + iter2.second;
-				int iFind;
+			View.push_back(strFindName + "->" + iter2 + " | " + Level);
 
-				for (size_t i = 0; i < View.size(); ++i)
-				{
-					iFind = View[i].Find(L"|");
-					if (iFind >= 0) {
-						FindStr = View[i].Left(iFind);
-					}
-					if (FindStr == sTemp)
-					{
-						View[i] = sTemp + " | " + Level;
-						++iCount;
-						//break;
-					}
-				}
-				if (FindStr != sTemp)
-				{
-					View.push_back(sTemp + " | " + Level);
-					++iCount;
-					//break;
-				}
-				
-			}
-			}
+			//if (iCount == 0) {
+			//	View.push_back(strFindName + "->" + iter2 + " | " + Level);
+			//	++iCount;
+			//}
+			//else if (iCount > 0) {
+			//	int NowCount = iCount;
+			//	CString sTemp = strFindName + "->" + iter2;
+			//	int iFind;
+
+			//	for (size_t i = 0; i < View.size(); ++i)
+			//	{
+			//		iFind = View[i].Find(L"|");
+			//		if (iFind >= 0) {
+			//			FindStr = View[i].Left(iFind);
+			//		}
+			//		if (FindStr == sTemp)
+			//		{
+			//			View[i] = sTemp + " | " + Level;
+			//			++iCount;
+			//		}
+			//	}
+			//	if (FindStr != sTemp)
+			//	{
+			//		View.push_back(sTemp + " | " + Level);
+			//		++iCount;
+			//	}
+			//}
+			//}
 		}
 	}
 
@@ -561,27 +549,30 @@ void UnitTool_TAB2::OnApplyButton()
 			((strFromName != L"") && (NowCount != 0)))
 		{
 			if ((strFromName != L"") && (strToOnceName != L"")) {
-				multimap<CString, CString> searchKey;
-				searchKey.emplace(strFromName, strToOnceName);
+				//multimap<CString, CString> searchKey;
+				//searchKey.emplace(strFromName, strToOnceName);
 				//auto iter = m_Hostility_Map.find(searchKey);
 				//iter->second = m_iSlider_Hos[0];
-				m_Hostility_Map[searchKey] = m_iSlider_Hos[0];
+				m_Hostility_Map[strFromName][strToOnceName] = m_iSlider_Hos[0];
 			}
 			if ((strFromName != L"") && (NowCount != 0))
 			{
-				multimap<CString, CString> searchKey2;
-				for (auto& veciter : vecstrToMultieName) {
-					searchKey2.emplace(strFromName, veciter);
-				}
-				for (auto& searchiter : searchKey2) {
+				//multimap<CString, CString> searchKey2;
+				//for (auto& veciter : vecstrToMultieName) {
+				//	searchKey2.emplace(strFromName, veciter);
+				//}
+				//for (auto& searchiter : searchKey2) {
 					//if (iter.first == searchKey2) {
 					//	iter.second = m_iSlider_Hos[1];
 					//}
-					m_Hostility_Map[searchKey2] = m_iSlider_Hos[1];
-				}
+				//	m_Hostility_Map[searchKey2] = m_iSlider_Hos[1];
+				//}
+
+				for (int i = 0; i != vecstrToMultieName.size(); ++i)
+				m_Hostility_Map[strFromName][vecstrToMultieName[i]] = m_iSlider_Hos[1];
 			}
 		}
-		OnResetButton();
+	//	OnResetButton();
 	}
 
 }

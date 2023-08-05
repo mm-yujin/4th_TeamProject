@@ -36,9 +36,13 @@ public:
 	//list<pair<CString, CString>> m_inner_Maplist;
 	//map<list<pair<CString, CString>>, int> m_Hostility_Map;
 	// 
-	multimap<CString, CString> m_inner_Maplist;
-	map<multimap<CString, CString>, int> m_Hostility_Map;
+	//multimap<CString, CString> m_inner_Maplist;
+	//map<multimap<CString, CString>, int> m_Hostility_Map;
+	//
 	//MainList와 ToList의 조합으로 키값 정하기. 사용 전 값이 있나 확인 필수
+
+	multimap<CString, int> m_inner_Maplist;
+	map<CString, map<CString, int>> m_Hostility_Map;
 
 	afx_msg void OnAddTeamButton();
 	afx_msg void OnListBox_ViewHos_From();
