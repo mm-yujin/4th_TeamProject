@@ -27,13 +27,19 @@ protected:
 	DECLARE_MESSAGE_MAP()
 
 public:
-	CListCtrl				m_ListCtrl;
 	vector<CSliderCtrl*>	m_vecSlider;
 	CLuaRichEdit			m_RichEdit;
+	CLuaRichEdit			m_RichEdit2;
+	CLuaRichEdit			m_RichEdit3;
 
 public:
 	afx_msg virtual BOOL OnInitDialog() override;
 	void AddSlider(int iIndex);
 	afx_msg void OnEnUpdateLuaEdit();
 	afx_msg void OnSaveLua();
+	afx_msg void OnLoadLua();
+	afx_msg void OnSaveLua2();
+	afx_msg void OnLoadLua2();
+	afx_msg void OnSaveLua3();
+	afx_msg void OnLoadLua3();
 };

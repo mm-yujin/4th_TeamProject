@@ -116,7 +116,7 @@ int CPlayer::LoadLuaDamage()
 {
 	int t = 0;
 
-	CLuaMgr::Get_Instance()->Call_Lua("../Lua/Script/Damage.lua", "Damage", 10, 10);
+	CLuaMgr::Get_Instance()->Call_Lua("../Lua/Script/Damage.lua", "Damage", 20, 1);
 	CLuaMgr::Get_Instance()->Return_Lua(t);
 	return t;
 }

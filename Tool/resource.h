@@ -65,7 +65,11 @@
 #define IDC_LIST6                       1045
 #define IDC_LUA_LIST                    1051
 #define IDC_LUA_EDIT                    1059
+#define IDC_LUA_EDIT2                   1060
+#define IDC_LUA_EDIT3                   1061
 #define IDC_LUA_SAVE                    1062
+#define IDC_LUA_SAVE2                   1063
+#define IDC_LUA_SAVE3                   1064
 
 // Next default values for new objects
 // 
