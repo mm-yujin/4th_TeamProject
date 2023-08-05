@@ -85,6 +85,11 @@ void UnitTool_TAB2::OnAddTeamButton()
 				return;
 			}
 		}
+		if (L"" == m_str_AddTeam)
+		{
+			AfxMessageBox(L"공백은 입력이 불가능합니다. 다른 팀 명을 입력해주세요.");
+			return;
+		}
 
 		m_TeamMainList.push_back(m_str_AddTeam);
 	}
@@ -641,7 +646,7 @@ void UnitTool_TAB2::OnSaveButton()
 				CString From = iter.first;
 				CString To = iter2.first;
 
-				fout << From << L"|" << To << L"|" << iter2.second << endl;
+				fout << From.GetString() << L"|" << To.GetString() << L"|" << iter2.second << endl;
 			}
 		}
 		AfxMessageBox(L"Save Complete.");
@@ -673,7 +678,7 @@ void UnitTool_TAB2::OnLoadButton()
 		{
 			fin.getline(From, MAX_STR, '|');
 			fin.getline(To, MAX_STR, '|');
-			fin.getline(Hos, MAX_STR, '|');
+			fin.getline(Hos, MAX_STR);
 
 			if (fin.eof())
 				break;
