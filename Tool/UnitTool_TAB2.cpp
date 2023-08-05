@@ -58,10 +58,13 @@ BEGIN_MESSAGE_MAP(UnitTool_TAB2, CDialogEx)
 	ON_NOTIFY(NM_CUSTOMDRAW, IDC_SLIDER2, &UnitTool_TAB2::OnNM_HOS_drawSlider2)
 	ON_BN_CLICKED(IDC_BUTTON8, &UnitTool_TAB2::OnApplyButton)
 	ON_BN_CLICKED(IDC_BUTTON2, &UnitTool_TAB2::OnResetButton)
+	ON_BN_CLICKED(IDC_BUTTON9, &UnitTool_TAB2::OnSaveButton)
+	ON_BN_CLICKED(IDC_BUTTON10, &UnitTool_TAB2::OnLoadButton)
 END_MESSAGE_MAP()
 
 
 // UnitTool_TAB2 메시지 처리기
+
 
 
 void UnitTool_TAB2::OnAddTeamButton()
@@ -149,6 +152,7 @@ void UnitTool_TAB2::OnAddTeamButton()
 }
 
 
+
 void UnitTool_TAB2::OnListBox_ViewHos_From()
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
@@ -182,54 +186,53 @@ void UnitTool_TAB2::OnListBox_ViewHos_From()
 	vector<CString> View;
 	int iCount = 0;
 
-	for (auto& iter2 : m_TeamViewToList)
-	{
-		for (auto& iter : m_Hostility_Map[iter2]) {
-				int Hos = iter.second;
-				CString Level, FindStr;
-			
-			//if (iter.first != searchKey)
-			//{
 
-			if (Hos >= 85)							{	Level = L"강한 적대";	}
-			else if ((Hos >= 70) && (Hos < 85))		{	Level = L"적대";		}
-			else if ((Hos >= 55) && (Hos < 70))		{	Level = L"약한 적대";	}
-			else if ((Hos >= 45) && (Hos < 55))		{	Level = L"보통";		}
-			else if ((Hos >= 30) && (Hos < 45))		{	Level = L"약한 우호";	}
-			else if ((Hos >= 15) && (Hos < 30))		{	Level = L"우호";		}
-			else if ((Hos >= 0) && (Hos < 20))		{	Level = L"강한 우호";	}
+	for (auto& iter : m_Hostility_Map[strFindName]) {
+		CString strTo = iter.first;
+		int Hos = iter.second;
+		CString Level, FindStr;
+		
+		//if (iter.first != searchKey)
+		//{
 
-			View.push_back(strFindName + "->" + iter2 + " | " + Level);
+		if (Hos >= 85)							{	Level = L"강한 적대";	}
+		else if ((Hos >= 70) && (Hos < 85))		{	Level = L"적대";		}
+		else if ((Hos >= 55) && (Hos < 70))		{	Level = L"약한 적대";	}
+		else if ((Hos >= 45) && (Hos < 55))		{	Level = L"보통";		}
+		else if ((Hos >= 30) && (Hos < 45))		{	Level = L"약한 우호";	}
+		else if ((Hos >= 15) && (Hos < 30))		{	Level = L"우호";		}
+		else if ((Hos >= 0) && (Hos < 20))		{	Level = L"강한 우호";	}
 
-			//if (iCount == 0) {
-			//	View.push_back(strFindName + "->" + iter2 + " | " + Level);
-			//	++iCount;
-			//}
-			//else if (iCount > 0) {
-			//	int NowCount = iCount;
-			//	CString sTemp = strFindName + "->" + iter2;
-			//	int iFind;
+		View.push_back(strFindName + "->" + strTo + " | " + Level);
 
-			//	for (size_t i = 0; i < View.size(); ++i)
-			//	{
-			//		iFind = View[i].Find(L"|");
-			//		if (iFind >= 0) {
-			//			FindStr = View[i].Left(iFind);
-			//		}
-			//		if (FindStr == sTemp)
-			//		{
-			//			View[i] = sTemp + " | " + Level;
-			//			++iCount;
-			//		}
-			//	}
-			//	if (FindStr != sTemp)
-			//	{
-			//		View.push_back(sTemp + " | " + Level);
-			//		++iCount;
-			//	}
-			//}
-			//}
-		}
+		//if (iCount == 0) {
+		//	View.push_back(strFindName + "->" + iter2 + " | " + Level);
+		//	++iCount;
+		//}
+		//else if (iCount > 0) {
+		//	int NowCount = iCount;
+		//	CString sTemp = strFindName + "->" + iter2;
+		//	int iFind;
+
+		//	for (size_t i = 0; i < View.size(); ++i)
+		//	{
+		//		iFind = View[i].Find(L"|");
+		//		if (iFind >= 0) {
+		//			FindStr = View[i].Left(iFind);
+		//		}
+		//		if (FindStr == sTemp)
+		//		{
+		//			View[i] = sTemp + " | " + Level;
+		//			++iCount;
+		//		}
+		//	}
+		//	if (FindStr != sTemp)
+		//	{
+		//		View.push_back(sTemp + " | " + Level);
+		//		++iCount;
+		//	}
+		//}
+		//}
 	}
 
 	sort(View.begin(), View.end());
@@ -243,6 +246,8 @@ void UnitTool_TAB2::OnListBox_ViewHos_From()
 
 	UpdateData(FALSE);
 }
+
+
 
 
 void UnitTool_TAB2::OnListBox_SettingHos_From()
@@ -273,6 +278,8 @@ void UnitTool_TAB2::OnListBox_SettingHos_From()
 	UpdateData(FALSE);
 	
 }
+
+
 
 
 void UnitTool_TAB2::OnListBox_Setting_To_Once()
@@ -378,6 +385,7 @@ void UnitTool_TAB2::OnListBox_Setting_To_Once()
 }
 
 
+
 void UnitTool_TAB2::OnListBox_Setting_To_Multi()
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
@@ -430,6 +438,7 @@ void UnitTool_TAB2::OnListBox_Setting_To_Multi()
 }
 
 
+
 BOOL UnitTool_TAB2::OnInitDialog()
 {
 	CDialogEx::OnInitDialog();
@@ -451,6 +460,7 @@ BOOL UnitTool_TAB2::OnInitDialog()
 	return TRUE;  // return TRUE unless you set the focus to a control
 				  // 예외: OCX 속성 페이지는 FALSE를 반환해야 합니다.
 }
+
 
 
 void UnitTool_TAB2::OnNM_HOS_drawSlider1(NMHDR* pNMHDR, LRESULT* pResult)
@@ -476,6 +486,7 @@ void UnitTool_TAB2::OnNM_HOS_drawSlider1(NMHDR* pNMHDR, LRESULT* pResult)
 }
 
 
+
 void UnitTool_TAB2::OnNM_HOS_drawSlider2(NMHDR* pNMHDR, LRESULT* pResult)
 {
 	LPNMCUSTOMDRAW pNMCD = reinterpret_cast<LPNMCUSTOMDRAW>(pNMHDR);
@@ -497,6 +508,8 @@ void UnitTool_TAB2::OnNM_HOS_drawSlider2(NMHDR* pNMHDR, LRESULT* pResult)
 	*pResult = 0;
 }
 
+
+
 void UnitTool_TAB2::OnApplyButton()
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
@@ -506,14 +519,16 @@ void UnitTool_TAB2::OnApplyButton()
 	int		SelCount = 0;
 	int		NowCount = 0;
 
-	if ((LB_ERR == m_ListBox_SettingHos_From.GetCurSel() &&
+	if ((LB_ERR == m_ListBox_SettingHos_From.GetCurSel()) ||
+
+		(LB_ERR == m_ListBox_SettingHos_From.GetCurSel() &&
 		LB_ERR == m_ListBox_SettingHos_To_Once.GetCurSel()) ||
 
 		(LB_ERR == m_ListBox_SettingHos_From.GetCurSel() &&
 		LB_ERR == m_ListBox_SettingHos_To_Multi.GetCurSel()) ||
 
-		(-1 == m_ListBox_SettingHos_To_Once.GetCurSel() &&
-		0 == m_ListBox_SettingHos_To_Multi.GetCurSel()) ||   //왜 0???
+		//(-1 == m_ListBox_SettingHos_To_Once.GetCurSel() &&
+		//0 == m_ListBox_SettingHos_To_Multi.GetCurSel()) ||   //왜 0???
 
 		(LB_ERR == m_ListBox_SettingHos_To_Once.GetCurSel() &&
 		LB_ERR == m_ListBox_SettingHos_To_Multi.GetCurSel())
@@ -525,25 +540,26 @@ void UnitTool_TAB2::OnApplyButton()
 		int iIndex = m_ListBox_SettingHos_From.GetCurSel();
 		m_ListBox_SettingHos_From.GetText(iIndex, strFromName);
 
-		int iIndex2 = m_ListBox_SettingHos_To_Once.GetCurSel();
-		m_ListBox_SettingHos_To_Once.GetText(iIndex2, strToOnceName);
+		if (LB_ERR != m_ListBox_SettingHos_To_Once.GetCurSel())
+		{
+			int iIndex2 = m_ListBox_SettingHos_To_Once.GetCurSel();
+			m_ListBox_SettingHos_To_Once.GetText(iIndex2, strToOnceName);
+		}
 
 		SelCount = m_ListBox_SettingHos_To_Multi.GetSelCount();
 		vecstrToMultieName.clear();
 
-		if (SelCount >= 1) {
-
-			for (int i = 0; i < m_ListBox_SettingHos_To_Multi.GetCount(); ++i)
+		if (SelCount >= 1)
+		for (int i = 0; i < m_ListBox_SettingHos_To_Multi.GetCount(); ++i)
+		{
+			if (m_ListBox_SettingHos_To_Multi.GetSel(i))
 			{
-				if (m_ListBox_SettingHos_To_Multi.GetSel(i))
-				{
-					CString Temp;
-					m_ListBox_SettingHos_To_Multi.GetText(i, Temp);
-					vecstrToMultieName.push_back(Temp);
-					++NowCount;
-				}
+				CString Temp;
+				m_ListBox_SettingHos_To_Multi.GetText(i, Temp);
+				vecstrToMultieName.push_back(Temp);
+				++NowCount;
 			}
-		}
+		}		
 
 		if (((strFromName != L"") && (strToOnceName != L"")) || 
 			((strFromName != L"") && (NowCount != 0)))
@@ -578,6 +594,7 @@ void UnitTool_TAB2::OnApplyButton()
 }
 
 
+
 void UnitTool_TAB2::OnResetButton()
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
@@ -603,4 +620,74 @@ void UnitTool_TAB2::OnResetButton()
 	m_str_AddTeam = L"";
 
 	UpdateData(FALSE);
+}
+
+
+
+
+
+void UnitTool_TAB2::OnSaveButton()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	wofstream  fout;
+	fout.open(L"../Data/TeamAgent.txt", ios::out);
+
+	if (!fout.fail())
+	{
+		for (auto& iter : m_Hostility_Map)
+		{
+			for (auto& iter2 : m_Hostility_Map[iter.first])
+			{
+				CString From = iter.first;
+				CString To = iter2.first;
+
+				fout << From << L"|" << To << L"|" << iter2.second << endl;
+			}
+		}
+		AfxMessageBox(L"Save Complete.");
+		fout.close();
+	}
+}
+
+
+
+
+
+void UnitTool_TAB2::OnLoadButton()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	UpdateData(TRUE);
+	wifstream		fin;
+	fin.open(L"../Data/TeamAgent.txt", ios::in);
+
+	if (!fin.fail())
+	{
+		m_Hostility_Map.clear();
+		m_TeamMainList.clear();
+
+		TCHAR From[MAX_STR] = L"";
+		TCHAR To[MAX_STR] = L"";
+		TCHAR Hos[MAX_STR] = L"";
+
+		while (true)
+		{
+			fin.getline(From, MAX_STR, '|');
+			fin.getline(To, MAX_STR, '|');
+			fin.getline(Hos, MAX_STR, '|');
+
+			if (fin.eof())
+				break;
+
+			m_Hostility_Map[From][To] = _ttoi(Hos);
+		}
+
+		for (auto& iter : m_Hostility_Map)
+		{
+			m_TeamMainList.push_back(iter.first);
+		}
+
+		AfxMessageBox(L"Load Complete.");
+	}
+	UpdateData(FALSE);
+	OnResetButton();
 }

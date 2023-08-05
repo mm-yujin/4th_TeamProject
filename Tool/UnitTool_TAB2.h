@@ -74,4 +74,6 @@ public:
 	//bool operator++(const UnitTool_TAB2& i) const {
 	//	return evaluate < i.evaluate;
 	//}
+	afx_msg void OnSaveButton();
+	afx_msg void OnLoadButton();
 };
