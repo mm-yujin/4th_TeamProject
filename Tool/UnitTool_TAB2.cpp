@@ -48,6 +48,7 @@ void UnitTool_TAB2::DoDataExchange(CDataExchange* pDX)
 
 
 
+
 BEGIN_MESSAGE_MAP(UnitTool_TAB2, CDialogEx)
 	ON_BN_CLICKED(IDC_BUTTON1, &UnitTool_TAB2::OnAddTeamButton)
 	ON_LBN_SELCHANGE(IDC_LIST4, &UnitTool_TAB2::OnListBox_ViewHos_From)
@@ -72,8 +73,14 @@ void UnitTool_TAB2::OnAddTeamButton()
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 	UpdateData(TRUE);
 
-	if (m_TeamMainList.empty())
+	if (m_TeamMainList.empty()) {
+		if (L"" == m_str_AddTeam)
+		{
+			AfxMessageBox(L"공백은 팀 명으로 사용할 수 없습니다.");
+			return;
+		}
 		m_TeamMainList.push_back(m_str_AddTeam);
+	}
 
 	else if (!m_TeamMainList.empty())
 	{
@@ -87,7 +94,7 @@ void UnitTool_TAB2::OnAddTeamButton()
 		}
 		if (L"" == m_str_AddTeam)
 		{
-			AfxMessageBox(L"공백은 입력이 불가능합니다. 다른 팀 명을 입력해주세요.");
+			AfxMessageBox(L"공백은 팀 명으로 사용할 수 없습니다.");
 			return;
 		}
 
@@ -526,17 +533,8 @@ void UnitTool_TAB2::OnApplyButton()
 
 	if ((LB_ERR == m_ListBox_SettingHos_From.GetCurSel()) ||
 
-		(LB_ERR == m_ListBox_SettingHos_From.GetCurSel() &&
-		LB_ERR == m_ListBox_SettingHos_To_Once.GetCurSel()) ||
-
-		(LB_ERR == m_ListBox_SettingHos_From.GetCurSel() &&
-		LB_ERR == m_ListBox_SettingHos_To_Multi.GetCurSel()) ||
-
-		//(-1 == m_ListBox_SettingHos_To_Once.GetCurSel() &&
-		//0 == m_ListBox_SettingHos_To_Multi.GetCurSel()) ||   //왜 0???
-
 		(LB_ERR == m_ListBox_SettingHos_To_Once.GetCurSel() &&
-		LB_ERR == m_ListBox_SettingHos_To_Multi.GetCurSel())
+			0 == m_ListBox_SettingHos_To_Multi.GetSelCount())
 		)
 	{
 		AfxMessageBox(L"From 또는 To의 선택 값이 없습니다. 확인하고 다시 시도해주세요.");
