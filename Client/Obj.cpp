@@ -3,6 +3,7 @@
 #include "TimeMgr.h"
 
 D3DXVECTOR3 CObj::m_vScroll{};
+bool		CObj::m_bScroll_Stop = false;
 
 CObj::CObj()
 {

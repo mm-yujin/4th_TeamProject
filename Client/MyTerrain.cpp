@@ -23,18 +23,6 @@ HRESULT CMyTerrain::Initialize(void)
 
 int CMyTerrain::Update(void)
 {
-	if (0.f > ::Get_Mouse().x)
-		m_vScroll.x += 100.f * CTimeMgr::Get_Instance()->Get_TimeDelta();
-
-	if (WINCX < ::Get_Mouse().x)
-		m_vScroll.x -= 100.f * CTimeMgr::Get_Instance()->Get_TimeDelta();
-
-	if (0.f > ::Get_Mouse().y)
-		m_vScroll.y += 100.f * CTimeMgr::Get_Instance()->Get_TimeDelta();
-
-	if (WINCY < ::Get_Mouse().y)
-		m_vScroll.y -= 100.f * CTimeMgr::Get_Instance()->Get_TimeDelta();
-
 	return 0;
 }
 

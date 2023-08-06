@@ -21,25 +21,39 @@ HRESULT CPlayer::Initialize(void)
 	m_wstrStateKey = L"Dash";
 
 	m_tFrame = { 0.f, 10.f };
-
 	m_fSpeed = 300.f;
+
+	m_iDamage = 100;
+	m_iDamageType = 0;
+	m_iDef = 20;
+	m_iLV = 10;
+	m_iBlock = 20;
+	m_iDex = 50;
 
 	return S_OK;
 }
 
 int CPlayer::Update(void)
 {
-	if (0.f > ::Get_Mouse().x)
-		m_vScroll.x += 100.f * CTimeMgr::Get_Instance()->Get_TimeDelta();
+	if (GetAsyncKeyState(VK_SPACE) & 0x8001)
+	{
+		m_bScroll_Stop = !m_bScroll_Stop;
+	}
 
-	if (WINCX < ::Get_Mouse().x)
-		m_vScroll.x -= 100.f * CTimeMgr::Get_Instance()->Get_TimeDelta();
+	if (!m_bScroll_Stop)
+	{
+		if (0.f > ::Get_Mouse().x)
+			m_vScroll.x += 250.f * CTimeMgr::Get_Instance()->Get_TimeDelta();
 
-	if (0.f > ::Get_Mouse().y)
-		m_vScroll.y += 100.f * CTimeMgr::Get_Instance()->Get_TimeDelta();
+		if (WINCX < ::Get_Mouse().x)
+			m_vScroll.x -= 250.f * CTimeMgr::Get_Instance()->Get_TimeDelta();
 
-	if (WINCY < ::Get_Mouse().y)
-		m_vScroll.y -= 100.f * CTimeMgr::Get_Instance()->Get_TimeDelta();
+		if (0.f > ::Get_Mouse().y)
+			m_vScroll.y += 250.f * CTimeMgr::Get_Instance()->Get_TimeDelta();
+
+		if (WINCY < ::Get_Mouse().y)
+			m_vScroll.y -= 250.f * CTimeMgr::Get_Instance()->Get_TimeDelta();
+	}
 
 	
 	if (GetAsyncKeyState(VK_RBUTTON) & 0x8000)
@@ -98,14 +112,36 @@ void CPlayer::Render(void)
 
 	//double elapsedMicroseconds = measureFunctionPerformance(&CPlayer::LoadLuaDamage, this);
 
-	swprintf_s(szBuf, L"%d", LoadLuaDamage());
+	swprintf_s(szBuf, L"대미지 : %d", LoadLuaDamage());
 
 	CDevice::Get_Instance()->Get_Font()->DrawTextW(CDevice::Get_Instance()->Get_Sprite(),
 		szBuf,
 		lstrlen(szBuf),
 		nullptr,
 		0,
-		D3DCOLOR_ARGB(255, 255, 255, 255));
+		D3DCOLOR_ARGB(255, 255, 0, 0));
+
+
+
+	swprintf_s(szBuf, L"방어력 : %f", LoadLuaDefence());
+
+	CDevice::Get_Instance()->Get_Font()->DrawTextW(CDevice::Get_Instance()->Get_Sprite(),
+		szBuf,
+		lstrlen(szBuf),
+		&RECT({0, -20, 200, 0}),
+		0,
+		D3DCOLOR_ARGB(255, 0, 0, 255));
+
+
+
+	swprintf_s(szBuf, L"블록율 : %f", LoadLuaBlock());
+
+	CDevice::Get_Instance()->Get_Font()->DrawTextW(CDevice::Get_Instance()->Get_Sprite(),
+		szBuf,
+		lstrlen(szBuf),
+		&RECT({ 0, -40, 200, 0 }),
+		0,
+		D3DCOLOR_ARGB(255, 255, 128, 0));
 }
 
 void CPlayer::Release(void)
@@ -116,7 +152,25 @@ int CPlayer::LoadLuaDamage()
 {
 	int t = 0;
 
-	CLuaMgr::Get_Instance()->Call_Lua("../Lua/Script/Damage.lua", "Damage", 20, 1);
+	CLuaMgr::Get_Instance()->Call_Lua("../Lua/Script/Damage.lua", "Damage", m_iDamage, m_iDamageType);
+	CLuaMgr::Get_Instance()->Return_Lua(t);
+	return t;
+}
+
+float CPlayer::LoadLuaDefence()
+{
+	float t = 0;
+
+	CLuaMgr::Get_Instance()->Call_Lua("../Lua/Script/Defence.lua", "Defence", m_iDef, m_iLV);
+	CLuaMgr::Get_Instance()->Return_Lua(t);
+	return t;
+}
+
+float CPlayer::LoadLuaBlock()
+{
+	float t = 0;
+
+	CLuaMgr::Get_Instance()->Call_Lua("../Lua/Script/Block.lua", "Block", m_iBlock, m_iDex, m_iLV);
 	CLuaMgr::Get_Instance()->Return_Lua(t);
 	return t;
 }

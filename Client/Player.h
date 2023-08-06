@@ -22,7 +22,16 @@ private:
 	bool		m_bMoveToTarget = false;
 	float		m_fSpeed;
 
+	int			m_iDamage;
+	int			m_iDamageType;
+	int			m_iDef;
+	int			m_iLV;
+	int			m_iBlock;
+	int			m_iDex;
+
 public:
 	int LoadLuaDamage();
+	float LoadLuaDefence();
+	float LoadLuaBlock();
 };
 

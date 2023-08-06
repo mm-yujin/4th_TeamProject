@@ -187,8 +187,8 @@ void CToolView::OnLButtonDown(UINT nFlags, CPoint point)
 	CMyForm*		pMyForm = dynamic_cast<CMyForm*>(pMainFrm->m_SecondSplitter.GetPane(1, 0));
 	CMapTool*		pMapTool = &(pMyForm->m_MapTool);
 	
-	m_pTerrain->Tile_Change(D3DXVECTOR3(float(int(float(point.x) / m_fZoom + GetScrollPos(0))),
-										float(int(float(point.y) / m_fZoom + GetScrollPos(1))),
+	m_pTerrain->Tile_Change(D3DXVECTOR3(float(point.x) / m_fZoom + (float)GetScrollPos(0),
+										float(point.y) / m_fZoom + (float)GetScrollPos(1),
 										0.f), pMapTool->m_iDrawID);
 
 	// Invalidate : 호출 시, 윈도우의 WM_PAINT와 WM_ERASEBKGND 메세지를 발생시킴

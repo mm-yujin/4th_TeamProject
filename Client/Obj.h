@@ -33,6 +33,7 @@ protected:
 
 protected:
 	static D3DXVECTOR3			m_vScroll;
+	static bool					m_bScroll_Stop;
 
 	INFO					m_tInfo;
 	FRAME					m_tFrame;
