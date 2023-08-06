@@ -70,6 +70,9 @@
 #define IDC_LUA_SAVE                    1062
 #define IDC_LUA_SAVE2                   1063
 #define IDC_LUA_SAVE3                   1064
+#define IDC_LUA_LOAD                    1065
+#define IDC_LUA_LOAD2                   1066
+#define IDC_LUA_LOAD3                   1067
 
 // Next default values for new objects
 // 
