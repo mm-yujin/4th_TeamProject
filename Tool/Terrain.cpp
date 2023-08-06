@@ -7,6 +7,7 @@
 CTerrain::CTerrain()
 {
 	m_vecTile.reserve(TILEX * TILEY);
+	m_vSize = { 1.f, 1.f, 1.f };
 }
 
 CTerrain::~CTerrain()
@@ -71,7 +72,7 @@ void CTerrain::Render()
 		float fX = WINCX / float(rc.right - rc.left);
 		float fY = WINCY / float(rc.bottom - rc.top);
 
-		Set_Ratio(&matWorld, fX, fY);
+		Set_Ratio(&matWorld, fX * m_vSize.x, fY * m_vSize.y);
 
 		float		fCenterX = pTexInfo->tImgInfo.Width / 2.f;
 		float		fCenterY = pTexInfo->tImgInfo.Height / 2.f;

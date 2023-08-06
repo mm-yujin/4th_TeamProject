@@ -31,5 +31,9 @@ public:
 private:
 	vector<TILE*>		m_vecTile;
 	CToolView*			m_pMainView = nullptr;
+	D3DXVECTOR3			m_vSize;
+
+public:
+	void Set_Size(D3DXVECTOR3 vSize) { m_vSize = vSize; }
 };
 

@@ -41,6 +41,10 @@ public:
 #endif
 
 protected:
+	CPoint m_ptStartDrag;
+	CPoint m_ptCurDrag;
+	bool	m_bIsDragView = false;
+	float	m_fZoom = 1.f;
 
 // 생성된 메시지 맵 함수
 protected:
@@ -49,11 +53,17 @@ public:
 	virtual void OnInitialUpdate();
 	afx_msg void OnDestroy();
 	afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
+	afx_msg void OnRButtonDown(UINT nFlags, CPoint point);
+	afx_msg BOOL OnMouseWheel(UINT fFlags, short zDelta, CPoint point);
 
 public:
-	CTerrain*		m_pTerrain;
+	CTerrain* m_pTerrain;
+	CSize			m_szOriginal;
 
 	afx_msg void OnMouseMove(UINT nFlags, CPoint point);
+
+public:
+	afx_msg void OnRButtonUp(UINT nFlags, CPoint point);
 };
 
 #ifndef _DEBUG  // ToolView.cpp의 디버그 버전

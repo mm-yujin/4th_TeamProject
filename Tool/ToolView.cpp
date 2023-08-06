@@ -31,6 +31,9 @@ BEGIN_MESSAGE_MAP(CToolView, CScrollView)
 	ON_COMMAND(ID_FILE_PRINT_PREVIEW, &CScrollView::OnFilePrintPreview)
 	ON_WM_DESTROY()
 	ON_WM_LBUTTONDOWN()
+	ON_WM_RBUTTONDOWN()
+	ON_WM_MOUSEWHEEL()
+	ON_WM_RBUTTONUP()
 	ON_WM_MOUSEMOVE()
 END_MESSAGE_MAP()
 
@@ -177,12 +180,16 @@ void CToolView::OnLButtonDown(UINT nFlags, CPoint point)
 
 	CScrollView::OnLButtonDown(nFlags, point);
 
+	if (m_bIsDragView)
+		return;
+
 	CMainFrame*		pMainFrm = dynamic_cast<CMainFrame*>(AfxGetApp()->GetMainWnd());
 	CMyForm*		pMyForm = dynamic_cast<CMyForm*>(pMainFrm->m_SecondSplitter.GetPane(1, 0));
 	CMapTool*		pMapTool = &(pMyForm->m_MapTool);
 	
-	m_pTerrain->Tile_Change(D3DXVECTOR3((float)point.x + GetScrollPos(0), 
-										(float)point.y + GetScrollPos(1), 0.f), pMapTool->m_iDrawID);
+	m_pTerrain->Tile_Change(D3DXVECTOR3(float(int(float(point.x) / m_fZoom + GetScrollPos(0))),
+										float(int(float(point.y) / m_fZoom + GetScrollPos(1))),
+										0.f), pMapTool->m_iDrawID);
 
 	// Invalidate : 호출 시, 윈도우의 WM_PAINT와 WM_ERASEBKGND 메세지를 발생시킴
 	// FALSE : WM_PAINT 메세지만 발생
@@ -198,27 +205,85 @@ void CToolView::OnLButtonDown(UINT nFlags, CPoint point)
 
 }
 
+void CToolView::OnRButtonDown(UINT nFlags, CPoint point)
+{
+	CScrollView::OnRButtonDown(nFlags, point);
+
+	m_ptStartDrag = point;
+
+	m_bIsDragView = true;
+}
+
+BOOL CToolView::OnMouseWheel(UINT fFlags, short zDelta, CPoint point)
+{
+	CScrollView::OnMouseWheel(fFlags, zDelta, point);
+
+	if (zDelta > 0)
+	{
+		m_fZoom = min(m_fZoom * 1.2f, 8.f);
+	}
+	else if (zDelta < 0)
+	{
+		m_fZoom = max(m_fZoom * 0.8f, 0.1f);
+	}
+
+	if (m_pTerrain)
+	{
+		m_pTerrain->Set_Size({ m_fZoom, m_fZoom, m_fZoom });
+	}
+
+	SetScrollSizes(MM_TEXT, CSize(int((float)m_szOriginal.cx * m_fZoom),
+		int((float)m_szOriginal.cy * m_fZoom)));
+
+	Invalidate(FALSE);
+
+	return 0;
+}
+
 void CToolView::OnMouseMove(UINT nFlags, CPoint point)
 {
 	CScrollView::OnMouseMove(nFlags, point);
 
-	if (GetAsyncKeyState(VK_LBUTTON) & 0x8000)
+	if (m_bIsDragView && GetAsyncKeyState(VK_RBUTTON) & 0x8000)
 	{
-		CMainFrame*		pMainFrm = dynamic_cast<CMainFrame*>(AfxGetApp()->GetMainWnd());
-		CMyForm*		pMyForm = dynamic_cast<CMyForm*>(pMainFrm->m_SecondSplitter.GetPane(1, 0));
-		CMapTool*		pMapTool = &(pMyForm->m_MapTool);
+		m_ptCurDrag = point;
 
-		m_pTerrain->Tile_Change(D3DXVECTOR3((float)point.x + GetScrollPos(0),
-			(float)point.y + GetScrollPos(1), 0.f), pMapTool->m_iDrawID);
+		// 뷰를 옮겨주는 코드
+		SetScrollPos(0,
+			min(GetScrollPos(0) + int(float(m_ptStartDrag.x - m_ptCurDrag.x) / m_fZoom), GetScrollLimit(0))
+		);
+		SetScrollPos(1,
+			min(GetScrollPos(1) + int(float(m_ptStartDrag.y - m_ptCurDrag.y) / m_fZoom), GetScrollLimit(1))
+		);
 
 		Invalidate(FALSE);
 
-		
-		CMiniView*		pMiniView = dynamic_cast<CMiniView*>(pMainFrm->m_SecondSplitter.GetPane(0, 0));
+		m_ptStartDrag = point;
+	}
+	else if (GetAsyncKeyState(VK_LBUTTON) & 0x8000)
+	{
+		CMainFrame* pMainFrm = dynamic_cast<CMainFrame*>(AfxGetApp()->GetMainWnd());
+		CMyForm* pMyForm = dynamic_cast<CMyForm*>(pMainFrm->m_SecondSplitter.GetPane(1, 0));
+		CMapTool* pMapTool = &(pMyForm->m_MapTool);
+
+		m_pTerrain->Tile_Change(D3DXVECTOR3(int(float(point.x) / m_fZoom + GetScrollPos(0)),
+			int(float(point.y) / m_fZoom + GetScrollPos(1)),
+			0.f), pMapTool->m_iDrawID);
+
+		Invalidate(FALSE);
+
+
+		CMiniView* pMiniView = dynamic_cast<CMiniView*>(pMainFrm->m_SecondSplitter.GetPane(0, 0));
 
 		pMiniView->Invalidate(FALSE);
 	}
 }
 
+void CToolView::OnRButtonUp(UINT nFlags, CPoint point)
+{
+	CScrollView::OnRButtonUp(nFlags, point);
+
+	m_bIsDragView = false;
+}
 
 
