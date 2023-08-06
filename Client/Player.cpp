@@ -35,7 +35,7 @@ HRESULT CPlayer::Initialize(void)
 
 int CPlayer::Update(void)
 {
-	if (GetAsyncKeyState(VK_SPACE) & 0x8001)
+	if (GetAsyncKeyState(VK_TAB) & 0x8000)
 	{
 		m_bScroll_Stop = !m_bScroll_Stop;
 	}
