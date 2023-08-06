@@ -2,7 +2,7 @@
 #include "MyTerrain.h"
 #include "TextureMgr.h"
 #include "Device.h"
-
+#include "TimeMgr.h"
 
 CMyTerrain::CMyTerrain()
 {
@@ -23,6 +23,18 @@ HRESULT CMyTerrain::Initialize(void)
 
 int CMyTerrain::Update(void)
 {
+	if (0.f > ::Get_Mouse().x)
+		m_vScroll.x += 100.f * CTimeMgr::Get_Instance()->Get_TimeDelta();
+
+	if (WINCX < ::Get_Mouse().x)
+		m_vScroll.x -= 100.f * CTimeMgr::Get_Instance()->Get_TimeDelta();
+
+	if (0.f > ::Get_Mouse().y)
+		m_vScroll.y += 100.f * CTimeMgr::Get_Instance()->Get_TimeDelta();
+
+	if (WINCY < ::Get_Mouse().y)
+		m_vScroll.y -= 100.f * CTimeMgr::Get_Instance()->Get_TimeDelta();
+
 	return 0;
 }
 
@@ -42,8 +54,8 @@ void CMyTerrain::Render(void)
 		D3DXMatrixIdentity(&matWorld);
 		D3DXMatrixScaling(&matScale, 1.f, 1.f, 1.f);
 		D3DXMatrixTranslation(&matTrans,
-			iter->vPos.x ,	// x축으로 스크롤 값
-			iter->vPos.y ,	// y축으로 스크롤 값
+			iter->vPos.x + m_vScroll.x,	// x축으로 스크롤 값
+			iter->vPos.y + m_vScroll.y,	// y축으로 스크롤 값
 			iter->vPos.z);
 
 		matWorld = matScale * matTrans;

@@ -29,7 +29,7 @@ HRESULT CPlayer::Initialize(void)
 
 int CPlayer::Update(void)
 {
-	/*if (0.f > ::Get_Mouse().x)
+	if (0.f > ::Get_Mouse().x)
 		m_vScroll.x += 100.f * CTimeMgr::Get_Instance()->Get_TimeDelta();
 
 	if (WINCX < ::Get_Mouse().x)
@@ -39,7 +39,7 @@ int CPlayer::Update(void)
 		m_vScroll.y += 100.f * CTimeMgr::Get_Instance()->Get_TimeDelta();
 
 	if (WINCY < ::Get_Mouse().y)
-		m_vScroll.y -= 100.f * CTimeMgr::Get_Instance()->Get_TimeDelta();*/
+		m_vScroll.y -= 100.f * CTimeMgr::Get_Instance()->Get_TimeDelta();
 
 	
 	if (GetAsyncKeyState(VK_RBUTTON) & 0x8000)
