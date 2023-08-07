@@ -16,7 +16,7 @@ CMyTerrain::~CMyTerrain()
 
 HRESULT CMyTerrain::Initialize(void)
 {
-	Load_Tile(L"../Data/Test.dat");
+	Load_Tile(L"../Data/Map.dat");
 
 	return S_OK;
 }

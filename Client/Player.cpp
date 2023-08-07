@@ -56,7 +56,7 @@ int CPlayer::Update(void)
 	}
 
 	
-	if (GetAsyncKeyState(VK_RBUTTON) & 0x8000)
+	if ((GetAsyncKeyState(VK_RBUTTON) & 0x8000) && (GetAsyncKeyState(VK_CONTROL) & 0x8000))
 	{
 		m_vTargetPos = Get_Mouse() - m_vScroll;
 		m_bMoveToTarget = true;

@@ -1,6 +1,6 @@
 function Damage(strength, type)
 	if type == 0 then
-		return strength * 1.1
+		return strength * 10
 	elseif type == 1 then
 		return strength * 0.8
 	else

@@ -110,7 +110,7 @@ void CLUA_Script::OnSaveLua()
 		fout.close();
 	}
 
-	WinExec("notepad.exe ../Lua/Script/Damage.lua", SW_SHOW);
+	//WinExec("notepad.exe ../Lua/Script/Damage.lua", SW_SHOW);
 }
 
 void CLUA_Script::OnLoadLua()
@@ -154,7 +154,7 @@ void CLUA_Script::OnSaveLua2()
 		fout.close();
 	}
 
-	WinExec("notepad.exe ../Lua/Script/Defence.lua", SW_SHOW);
+	//WinExec("notepad.exe ../Lua/Script/Defence.lua", SW_SHOW);
 }
 
 void CLUA_Script::OnLoadLua2()
@@ -198,7 +198,7 @@ void CLUA_Script::OnSaveLua3()
 		fout.close();
 	}
 
-	WinExec("notepad.exe ../Lua/Script/Block.lua", SW_SHOW);
+	//WinExec("notepad.exe ../Lua/Script/Block.lua", SW_SHOW);
 }
 
 void CLUA_Script::OnLoadLua3()
