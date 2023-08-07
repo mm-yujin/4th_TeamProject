@@ -18,9 +18,9 @@ HRESULT CPlayer::Initialize(void)
 {
 	m_tInfo.vPos = { 100.f, 100.f, 0.f };
 	m_wstrObjKey = L"Player";
-	m_wstrStateKey = L"Dash";
+	m_wstrStateKey = L"Stand";
 
-	m_tFrame = { 0.f, 10.f };
+	m_tFrame = { 0.f, 11.f };
 	m_fSpeed = 300.f;
 
 	m_iDamage = 100;
@@ -117,7 +117,7 @@ void CPlayer::Render(void)
 	CDevice::Get_Instance()->Get_Font()->DrawTextW(CDevice::Get_Instance()->Get_Sprite(),
 		szBuf,
 		lstrlen(szBuf),
-		nullptr,
+		&RECT({ 40, -20, 200, 0 }),
 		0,
 		D3DCOLOR_ARGB(255, 255, 0, 0));
 
@@ -128,7 +128,7 @@ void CPlayer::Render(void)
 	CDevice::Get_Instance()->Get_Font()->DrawTextW(CDevice::Get_Instance()->Get_Sprite(),
 		szBuf,
 		lstrlen(szBuf),
-		&RECT({0, -20, 200, 0}),
+		&RECT({40, -40, 200, 0}),
 		0,
 		D3DCOLOR_ARGB(255, 0, 0, 255));
 
@@ -139,7 +139,7 @@ void CPlayer::Render(void)
 	CDevice::Get_Instance()->Get_Font()->DrawTextW(CDevice::Get_Instance()->Get_Sprite(),
 		szBuf,
 		lstrlen(szBuf),
-		&RECT({ 0, -40, 200, 0 }),
+		&RECT({ 40, -60, 200, 0 }),
 		0,
 		D3DCOLOR_ARGB(255, 255, 128, 0));
 }
